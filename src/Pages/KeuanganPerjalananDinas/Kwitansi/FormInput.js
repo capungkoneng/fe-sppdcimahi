@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AddDataKwitansi } from "Services";
 import { toast } from "react-toastify";
+import { KwitansiSchema } from "./data/kwitansiSchema";
 
 export const FormInput = ({
     onCallback = () => {},
@@ -34,16 +35,43 @@ export const FormInput = ({
         sub_kegiatan: "",
         kode_rek: "",
         bidang: "",
-        vkwitansi: [
-            {
-                uraian: "transportasi",
-                nilai_rill: "90000",
-                nilai_disetujui: "90000"
-            }
-        ]
     });
 
-    console.log(data)
+    const [initialKwitansi, setKwitansi] = useState({
+        vkwitansi: [
+            {
+                uraian: "uang harian",
+                nilai_rill: "",
+                nilai_disetujui: ""
+            },
+            {
+                uraian: "transportasi",
+                nilai_rill: "",
+                nilai_disetujui: ""
+            },
+            {
+                uraian: "penginapan",
+                nilai_rill: "",
+                nilai_disetujui: ""
+            },
+            {
+                uraian: "biaya pengeluaran rill",
+                nilai_rill: "",
+                nilai_disetujui: ""
+            },
+            {
+                uraian: "uang repsentatif",
+                nilai_rill: "",
+                nilai_disetujui: ""
+            },
+            {
+                uraian: "lain - lain",
+                nilai_rill: "",
+                nilai_disetujui: ""
+            }
+            ]
+        });
+
     useEffect(() => {
         if (item) {
             setData({
@@ -67,29 +95,74 @@ export const FormInput = ({
 
 
     const addDataKwitansi = async (payload) => {
-        console.log(payload)
+        const data = {...payload,...initialKwitansi}
         try {
-          const response = await AddDataKwitansi(payload);
-          if (response.data) {
-            console.log(response.data)
-            onCallback({ success: true });
-            toast.success("Berhasil tambah data");
-          }
+            const response = await AddDataKwitansi(data);
+            if (response.data) {
+                onCallback({ success: true });
+                toast.success("Berhasil tambah data");
+            }
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      };
+    };
+
+    const changeKwitansi = (data,uraian, nilai) => {
+        const dataKwitansi = initialKwitansi.vkwitansi.filter( (data) => {
+            if(data.uraian === uraian){
+                return data
+            }
+        })
+        if(nilai === 'nilai_rill'){
+            const kwitansi = {
+                uraian: dataKwitansi[0].uraian,
+                nilai_rill: data,
+                nilai_disetujui: dataKwitansi[0].nilai_disetujui
+            }
+
+            const newData = initialKwitansi.vkwitansi.filter( (data) => {
+                if(data.uraian !== uraian){
+                    return data
+                }
+            })
+            newData.push(kwitansi)
+            const datasKwitansi = {
+                vkwitansi: newData
+            }
+            setKwitansi(datasKwitansi)
+        }else{
+            const kwitansi = {
+                uraian: dataKwitansi[0].uraian,
+                nilai_rill: dataKwitansi[0].nilai_rill,
+                nilai_disetujui: data
+            }
+            
+            const newData = initialKwitansi.vkwitansi.filter( (data) => {
+                if(data.uraian !== uraian){
+                    return data
+                }
+            })
+            newData.push(kwitansi)
+            const datasKwitansi = {
+                vkwitansi: newData
+            }
+            setKwitansi(datasKwitansi)
+        }
+    }
 
     return (
         <div className="wrapper-content">
             <Formik
                 initialValues={data}
                 enableReinitialize
+                validationSchema={KwitansiSchema}
                 onSubmit={(value) =>
                     contentType === addDataKwitansi(value)
-                  }
+                }
             >
                 {({
+                    errors,
+                    touched,
                     values,
                     handleChange,
                     handleSubmit,
@@ -97,7 +170,7 @@ export const FormInput = ({
                 }) => (
                     <Form>
                         <SectionForm
-                            column="3"
+                            column="2"
                             gap="4"
                             className="mt-8"
                         >   
@@ -106,6 +179,12 @@ export const FormInput = ({
                                     title={"Tambah Data Kwitansi"}>
                                 </WrapperForm>    
                             </div>
+                        </SectionForm>
+                        <SectionForm
+                            column="3"
+                            gap="4"
+                            className="mt-8"
+                        >   
                             <div>
                                 <TextInput
                                     id="no_kwt"
@@ -115,6 +194,11 @@ export const FormInput = ({
                                     value={values.no_kwt}
                                     onChange={handleChange}
                                 />
+                                {touched.no_kwt && errors.no_kwt && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.no_kwt}
+                                    </span>
+                                )}
                             </div>
                             <div>
                                 <label className="text-gray-700">Tgl</label>
@@ -125,12 +209,6 @@ export const FormInput = ({
                                     onChange={(value) => setFieldValue("tgl", value)}
                                 />
                             </div>
-                        </SectionForm>
-                        <SectionForm
-                            column="3"
-                            gap="4"
-                            className="mt-8"
-                        >   
                             <div>
                                 <TextInput
                                     id="no_spd"
@@ -141,6 +219,12 @@ export const FormInput = ({
                                     onChange={handleChange}
                                 />
                             </div>
+                        </SectionForm>
+                        <SectionForm
+                            column="3"
+                            gap="4"
+                            className="mt-8"
+                        >   
                             <div>
                                 <TextInput
                                     id="nik"
@@ -151,12 +235,6 @@ export const FormInput = ({
                                     onChange={handleChange}
                                 />
                             </div>
-                        </SectionForm>
-                        <SectionForm
-                            column="3"
-                            gap="4"
-                            className="mt-8"
-                        >   
                             <div>
                                 <TextInput
                                     id="no_spt"
@@ -250,18 +328,10 @@ export const FormInput = ({
                                     Uang Harian
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilai_rill"
-                                        name="nilai_rill"
-                                        onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'uang harian', 'nilai_rill')}/>
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilai_disetujui"
-                                        name="nilai_disetujui"
-                                        onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'uang harian', 'nilai_disetujui')}/>
                                 </TableContent>
                             </tr>
                             <tr>
@@ -273,18 +343,10 @@ export const FormInput = ({
                                     tiket lain lain
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilHarian"
-                                        name="nilaiRiilHarian"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'transportasi', 'nilai_rill')}/>
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilDisetujui"
-                                        name="nilaiRiilDisetujui"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'transportasi', 'nilai_disetujui')}/>
                                 </TableContent>
                             </tr>
                             <tr>
@@ -292,18 +354,10 @@ export const FormInput = ({
                                     Penginapan
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilHarian"
-                                        name="nilaiRiilHarian"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'penginapan', 'nilai_rill')}/>
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilDisetujui"
-                                        name="nilaiRiilDisetujui"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'penginapan', 'nilai_disetujui')}/>
                                 </TableContent>
                             </tr>
                             <tr>
@@ -311,18 +365,10 @@ export const FormInput = ({
                                     Biaya Pengeluaran Riil
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilHarian"
-                                        name="nilaiRiilHarian"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'biaya pengeluaran rill', 'nilai_rill')}/>
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilDisetujui"
-                                        name="nilaiRiilDisetujui"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'biaya pengeluaran rill', 'nilai_disetujui')}/>
                                 </TableContent>
                             </tr>
                             <tr>
@@ -330,18 +376,10 @@ export const FormInput = ({
                                     Uang Repsentatif
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilHarian"
-                                        name="nilaiRiilHarian"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'uang repsentatif', 'nilai_rill')}/>
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilDisetujui"
-                                        name="nilaiRiilDisetujui"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'uang repsentatif', 'nilai_disetujui')}/>
                                 </TableContent>
                             </tr>
                             <tr>
@@ -349,56 +387,10 @@ export const FormInput = ({
                                     Lain - lain
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilHarian"
-                                        name="nilaiRiilHarian"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'lain - lain', 'nilai_rill')}/>
                                 </TableContent>
                                 <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilDisetujui"
-                                        name="nilaiRiilDisetujui"
-                                        // onChange={handleChange}
-                                    />
-                                </TableContent>
-                            </tr>
-                            <tr>
-                                <TableContent>
-                                    Lain - lain
-                                </TableContent>
-                                <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilHarian"
-                                        name="nilaiRiilHarian"
-                                        // onChange={handleChange}
-                                    />
-                                </TableContent>
-                                <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilDisetujui"
-                                        name="nilaiRiilDisetujui"
-                                        // onChange={handleChange}
-                                    />
-                                </TableContent>
-                            </tr>
-                            <tr>
-                                <TableContent>
-                                    Lain - lain
-                                </TableContent>
-                                <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilHarian"
-                                        name="nilaiRiilHarian"
-                                        // onChange={handleChange}
-                                    />
-                                </TableContent>
-                                <TableContent>
-                                    <TextInput
-                                        id="nilaiRiilDisetujui"
-                                        name="nilaiRiilDisetujui"
-                                        // onChange={handleChange}
-                                    />
+                                    <input className="base-input pr-10" type="number" onChange={ (e) => changeKwitansi(e.target.value, 'lain - lain', 'nilai_disetujui')}/>
                                 </TableContent>
                             </tr>
                         </Table>

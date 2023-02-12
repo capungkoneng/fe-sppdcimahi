@@ -1,27 +1,29 @@
-import { Button, HaederContent, MainHeader, Table, TableContent, TextInput, WrapperContent } from "Components"
+import { Button, HaederContent, MainHeader, TextInput } from "Components"
 import { useEffect, useState } from "react"
 import { FormInput } from "./FormInput";
+import { View } from "./View";
 import { GetDataKwitansi } from "Services";
 
 export const Kwitansi = () => {
     const [contentType, setContentType] = useState('View');
-    const [data, setData] = useState(null);
+    const [listData, setListData] = useState([]);
+    // const [data, setData] = useState(null);
 
     useEffect(() => {
-        if (contentType === 'Edit') {
+        if (contentType === 'View') {
             fetchDataKwitansi();
+        }else if(contentType === 'Edit'){
             setContentType('Edit');
         }
     }, [contentType]);
-
     const fetchDataKwitansi = async () => {
         try {
             const response = await GetDataKwitansi();
             if (response.data) {
-                setData(response.data.result[0]);
+                setListData(response.data.result);
             }
         } catch (error) {
-            
+            console.log(error)
         }
     }
 
@@ -40,7 +42,7 @@ export const Kwitansi = () => {
                     <div>
                         <h1 className="title">Keuangan - Kwintansi SPPD</h1>
                         {
-                            contentType === 'Edit' ? null : (
+                            contentType === 'Edit' || contentType === 'Add' ? null : (
                                 <Button onClick={() => setContentType('Add')} className="gap-2 w-32" backgroundColor="bg-orange-500 mt-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                                         <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
@@ -59,36 +61,13 @@ export const Kwitansi = () => {
                         <TextInput 
                             placeholder="Cari Data"
                         />
-
-                        <Table
-                            listLabel={[
-                                {id: 'no_kwt', name: 'Keperluan'},
-                                {id: 'nip', name: 'No Surat'},
-                                {id: 'nama', name: 'Lokasi'},
-                                {id: 'no_spd', name: 'No.SPD'},
-                                {id: 'no_spt', name: 'No.SPT'},
-                                {id: 'tgl_mulai', name: 'Tgl Mulai'},
-                                {id: 'tgl_selesai', name: 'Tgl Selesai'},
-                                {id: 'kegiatan', name: 'Kegiatan'},
-                                {id: 'aksi', name: 'Aksi'},
-                            ]}
-                        >
-                            <tr>
-                                <TableContent>001-KWT-2023</TableContent>
-                                <TableContent>20029121</TableContent>
-                                <TableContent>Teti(Kadis Pertanian)</TableContent>
-                                <TableContent>001-SPD-2023</TableContent>
-                                <TableContent>05-Jan-2023</TableContent>
-                                <TableContent>05-Jan-2023</TableContent>
-                                <TableContent>05-Jan-2023</TableContent>
-                                <TableContent>Rakor Anggaran</TableContent>
-                                <TableContent>Action</TableContent>
-                            </tr>
-                        </Table>
+                        <View 
+                            listData={listData}
+                        />
                     </div> : 
                     <FormInput 
                         contentType={contentType}
-                        item={data}
+                        // item={data}
                     />
                 }
         </main>
