@@ -1,21 +1,28 @@
 import { Button, HaederContent, MainHeader, TextInput } from "Components"
+import { ModalDelete } from "Components/ModalDelete";
 import { useEffect, useState } from "react"
 import { FormInput } from "./FormInput";
 import { View } from "./View";
-import { GetDataKwitansi } from "Services";
+import { GetDataKwitansi, GetDataKwitansiById, DeleteDataKwitansi } from "Services";
+import { useDispatch, useSelector } from "react-redux";
+import { setContentType } from "Configs/Redux/reducers";
+import { toast } from "react-toastify";
 
 export const Kwitansi = () => {
-    const [contentType, setContentType] = useState('View');
+    const state = useSelector(state => state.root);
+    const dispatch = useDispatch();
     const [listData, setListData] = useState([]);
-    // const [data, setData] = useState(null);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
-        if (contentType === 'View') {
+        if (state.contentType === 'View') {
             fetchDataKwitansi();
-        }else if(contentType === 'Edit'){
-            setContentType('Edit');
+            setData(null)
+        }else if(state.contentType === 'Edit'){
+            fetchDataById(state.selectedId)
         }
-    }, [contentType]);
+    }, [dispatch, state.contentType, state.selectedId]);
+
     const fetchDataKwitansi = async () => {
         try {
             const response = await GetDataKwitansi();
@@ -24,6 +31,29 @@ export const Kwitansi = () => {
             }
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    const fetchDataById = async id => {
+        try {
+            const response = await GetDataKwitansiById(id);
+            if (response.data) {
+                setData(response.data.msg);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const DeleteData = async () => {
+        try {
+            const response = await DeleteDataKwitansi(state.selectedId);
+            if (response) {
+                dispatch(setContentType('View'));
+                toast.success('Berhasil hapus data');
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -42,21 +72,28 @@ export const Kwitansi = () => {
                     <div>
                         <h1 className="title">Keuangan - Kwintansi SPPD</h1>
                         {
-                            contentType === 'Edit' || contentType === 'Add' ? null : (
-                                <Button onClick={() => setContentType('Add')} className="gap-2 w-32" backgroundColor="bg-orange-500 mt-2">
+                            state.contentType === 'View' ? (
+                                <Button onClick={() => dispatch(setContentType('Add'))} className="gap-2 w-32" backgroundColor="bg-orange-500 mt-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                                         <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                                     </svg>
                                     Tambah
                                 </Button>
-                            )
+                            ) : state.contentType === 'Edit' || state.contentType === 'Add' ? (
+                                <Button onClick={() => dispatch(setContentType('View'))} className="gap-2 w-32" backgroundColor="bg-orange-500 mt-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+                                        <path d="M3 3.5A1.5 1.5 0 014.5 2h6.879a1.5 1.5 0 011.06.44l4.122 4.12A1.5 1.5 0 0117 7.622V16.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 013 16.5v-13z" />
+                                    </svg>
+                                    Kwitansi
+                                </Button>
+                            ) : null
                         }
                     </div>
                 </HaederContent>
             </MainHeader>
 
                 {
-                    contentType === 'View' ? 
+                    state.contentType === 'View' || state.contentType === 'Delete' ? 
                     <div className="wrapper-content">
                         <TextInput 
                             placeholder="Cari Data"
@@ -64,10 +101,18 @@ export const Kwitansi = () => {
                         <View 
                             listData={listData}
                         />
+                        <ModalDelete
+                            isOpen={state.contentType === 'Delete' ? true : false}
+                            onDeleteData={() => DeleteData() }
+                            closeModal={() => dispatch(setContentType('View'))}
+                        />
                     </div> : 
                     <FormInput 
-                        contentType={contentType}
-                        // item={data}
+                        contentType={state.contentType}
+                        item={data}
+                        onCallback={() => {
+                            dispatch(setContentType('View'));
+                        }}
                     />
                 }
         </main>

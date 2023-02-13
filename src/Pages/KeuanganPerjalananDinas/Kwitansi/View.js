@@ -1,9 +1,13 @@
-import { Table, TableContent } from "Components"
-import moment from "moment"
+import { Table, TableContent } from "Components";
+import { useDispatch } from "react-redux";
+import { setContentType, setSelectedId } from "Configs/Redux/reducers";
+import moment from "moment";
+import { ActionData } from "utils";
 
 export const View = ({
     listData = []
 }) => {
+    const dispatch = useDispatch();
     return (
         <Table
             listLabel={[
@@ -31,7 +35,22 @@ export const View = ({
                             <TableContent>{moment(value.tgl_selesai).format('DD-MMM-YYYY')}</TableContent>
                             <TableContent>{value.kegiatan}</TableContent>
                             <TableContent>
-                                Action
+                                {
+                                    ActionData.map(result => {
+                                        return result.isRender ? (
+                                            <button 
+                                                className="mt-2" 
+                                                key={result.id}
+                                                onClick={() => {
+                                                    dispatch(setContentType(result.name))
+                                                    dispatch(setSelectedId(value.id))
+                                                }}
+                                            >
+                                                {result.icon}
+                                            </button>
+                                        ) : null
+                                    })
+                                }
                             </TableContent>
                         </tr>
                     )

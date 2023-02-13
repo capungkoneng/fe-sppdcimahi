@@ -11,7 +11,7 @@ import { useEffect, useState } from "react"
 import { Form, Formik } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { AddDataKwitansi } from "Services";
+import { AddDataKwitansi, EditDataKwitansi } from "Services";
 import { toast } from "react-toastify";
 import { KwitansiSchema } from "./data/kwitansiSchema";
 
@@ -107,6 +107,18 @@ export const FormInput = ({
         }
     };
 
+    const EditData = async (payload) => {
+        try {
+            const response = await EditDataKwitansi(item.id, payload);
+            if (response.data) {
+                onCallback({ success: true });
+                toast.success("Berhasil edit data");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const changeKwitansi = (data,uraian, nilai) => {
         const dataKwitansi = initialKwitansi.vkwitansi.filter( (data) => {
             if(data.uraian === uraian){
@@ -157,7 +169,7 @@ export const FormInput = ({
                 enableReinitialize
                 validationSchema={KwitansiSchema}
                 onSubmit={(value) =>
-                    contentType === addDataKwitansi(value)
+                    contentType === 'Add' ? addDataKwitansi(value) : EditData(value)
                 }
             >
                 {({
@@ -176,7 +188,7 @@ export const FormInput = ({
                         >   
                             <div>
                                 <WrapperForm
-                                    title={"Tambah Data Kwitansi"}>
+                                        title={`${contentType === "Edit" ? "Edit" : "Tambah"} Data Kwitansi`}>
                                 </WrapperForm>    
                             </div>
                         </SectionForm>
@@ -208,6 +220,11 @@ export const FormInput = ({
                                     dateFormat="dd-MM-yyyy"
                                     onChange={(value) => setFieldValue("tgl", value)}
                                 />
+                                {touched.tgl && errors.tgl && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.tgl}
+                                    </span>
+                                )}
                             </div>
                             <div>
                                 <TextInput
@@ -218,6 +235,11 @@ export const FormInput = ({
                                     value={values.no_spd}
                                     onChange={handleChange}
                                 />
+                                {touched.no_spd && errors.no_spd && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.no_spd}
+                                    </span>
+                                )}
                             </div>
                         </SectionForm>
                         <SectionForm
@@ -234,6 +256,11 @@ export const FormInput = ({
                                     value={values.nik}
                                     onChange={handleChange}
                                 />
+                                {touched.nik && errors.nik && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.nik}
+                                    </span>
+                                )}
                             </div>
                             <div>
                                 <TextInput
@@ -244,6 +271,11 @@ export const FormInput = ({
                                     value={values.no_spt}
                                     onChange={handleChange}
                                 />
+                                {touched.no_spt && errors.no_spt && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.no_spt}
+                                    </span>
+                                )}
                             </div>
                             <div>
                                 <TextInput
@@ -254,6 +286,11 @@ export const FormInput = ({
                                     value={values.nama}
                                     onChange={handleChange}
                                 />
+                                {touched.nama && errors.nama && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.nama}
+                                    </span>
+                                )}
                             </div>
                         </SectionForm>
                         <SectionForm
@@ -270,6 +307,11 @@ export const FormInput = ({
                                     value={values.tujuan}
                                     onChange={handleChange}
                                 />
+                                {touched.tujuan && errors.tujuan && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.tujuan}
+                                    </span>
+                                )}
                             </div>
                         </SectionForm>
                         <SectionForm
@@ -285,6 +327,11 @@ export const FormInput = ({
                                     dateFormat="dd-MM-yyyy"
                                     onChange={(value) => setFieldValue("tgl_berangkat", value)}
                                 />
+                                {touched.tgl_berangkat && errors.tgl_berangkat && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.tgl_berangkat}
+                                    </span>
+                                )}
                             </div>
                             <div>
                                 <label className="text-gray-700">Tgl Mulai</label>
@@ -294,6 +341,11 @@ export const FormInput = ({
                                     dateFormat="dd-MM-yyyy"
                                     onChange={(value) => setFieldValue("tgl_mulai", value)}
                                 />
+                                {touched.tgl_mulai && errors.tgl_mulai && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.tgl_mulai}
+                                    </span>
+                                )}
                             </div>
                             <div>
                                 <label className="text-gray-700">Tgl Pulang</label>
@@ -303,6 +355,11 @@ export const FormInput = ({
                                     dateFormat="dd-MM-yyyy"
                                     onChange={(value) => setFieldValue("tgl_pulang", value)}
                                 />
+                                {touched.tgl_pulang && errors.tgl_pulang && (
+                                    <span className="mt-2 text-xs text-red-500 font-semibold">
+                                        {errors.tgl_pulang}
+                                    </span>
+                                )}
                             </div>
                         </SectionForm>
                         <SectionForm
@@ -407,37 +464,61 @@ export const FormInput = ({
                                     <InputSelect 
                                         id="kegiatan"
                                         name="kegiatan"
+                                        value={values.kegiatan}
                                         onChange={handleChange}
                                     >
                                         <option value="Services">Services</option>
                                     </InputSelect>
+                                    {touched.kegiatan && errors.kegiatan && (
+                                        <span className="mt-2 text-xs text-red-500 font-semibold">
+                                            {errors.kegiatan}
+                                        </span>
+                                    )}
                                 </TableContent>
                                 <TableContent>
                                     <InputSelect 
                                         id="sub_kegiatan"
                                         name="sub_kegiatan"
+                                        value={values.sub_kegiatan}
                                         onChange={handleChange}
                                     >
                                         <option value="Maintanance">Maintanance</option>
                                     </InputSelect>
+                                    {touched.sub_kegiatan && errors.sub_kegiatan && (
+                                        <span className="mt-2 text-xs text-red-500 font-semibold">
+                                            {errors.sub_kegiatan}
+                                        </span>
+                                    )}
                                 </TableContent>
                                 <TableContent>
                                     <InputSelect 
                                         id="kode_rek"
                                         name="kode_rek"
+                                        value={values.kode_rek}
                                         onChange={handleChange}
                                     >
                                         <option value="029231">029231</option>
                                     </InputSelect>
+                                    {touched.kode_rek && errors.kode_rek && (
+                                        <span className="mt-2 text-xs text-red-500 font-semibold">
+                                            {errors.kode_rek}
+                                        </span>
+                                    )}
                                 </TableContent>
                                 <TableContent>
                                     <InputSelect 
                                         id="bidang"
                                         name="bidang"
+                                        value={values.bidang}
                                         onChange={handleChange}
                                     >
                                         <option value="Instalasi">Instalasi</option>
                                     </InputSelect>
+                                    {touched.bidang && errors.bidang && (
+                                        <span className="mt-2 text-xs text-red-500 font-semibold">
+                                            {errors.bidang}
+                                        </span>
+                                    )}
                                 </TableContent>
                             </tr>
                         </Table>
