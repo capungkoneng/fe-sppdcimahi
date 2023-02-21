@@ -5,7 +5,8 @@ export const InputSelect = ({
     id = "",
     name = "",
     value = "",
-    onChange = () => {}
+    onChange = () => {},
+    onSelect = () => {}
 }) => {
     return (
         <div>
@@ -18,6 +19,9 @@ export const InputSelect = ({
             }
             <select 
                 onChange={onChange}
+                onSelect={ (e) => {
+                    onSelect(e.target.value)
+                }}
                 id={id} 
                 className="mt-2 block px-2 py-2 w-full bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name={name}>
                 <option value={value}>

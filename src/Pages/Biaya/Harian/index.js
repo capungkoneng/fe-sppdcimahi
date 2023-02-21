@@ -1,20 +1,27 @@
-import { Button, HaederContent, MainHeader, WrapperContent } from "Components"
-import { ModalDelete } from "Components/ModalDelete";
-import { setContentType } from "Configs/Redux/reducers";
+import { SectionHeader, Content, TableContent } from "Components";
+import { ListContentTable } from "Components/Content/data";
+import { DataLabelHarian } from "./data/tabelHarian";
+import { setContentType, setSelectedId } from "Configs/Redux/reducers";
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { DeleteDataHarian, GetAllDataHarian, GetAllProvince, GetDataHarianById } from "Services";
+import { DeleteDataHarian, GetAllDataHarian, GetDataHarianById } from "Services";
 import { FormInput } from "./FormInput";
-import { View } from "./View";
+import { View } from "./View"
+import { formatterCurrency } from "utils";
 
 export const Harian = () => {
     const state = useSelector(state => state.root);
     const dispatch = useDispatch();
     const [listData, setListData] = useState([]);
-    const [listProvince, setListProvince] = useState([]);
     const [data, setData] = useState(null);
     const [isAddData, setIsAddData] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [statusModal, setStatusModal] = useState({
+        contentType: null,
+        value: null,
+        status: false
+    });
 
     useEffect(() => {
         if (isAddData) {
@@ -24,7 +31,6 @@ export const Harian = () => {
 
     useEffect(() => {
         fetchAllData(1);
-        fetchListProvince();
     }, []);
 
     useEffect(() => {
@@ -33,17 +39,6 @@ export const Harian = () => {
             dispatch(setContentType('Edit'));
         }
     }, [dispatch, state.contentType, state.selectedId]);
-
-    const fetchListProvince = async () => {
-        try {
-            const response = await GetAllProvince();
-            if (response.data.msg) {
-                setListProvince(response.data.msg);
-            }
-        } catch (error) {
-            setListProvince([]);
-        }
-    }
 
     const fetchDataById = async id => {
         try {
@@ -81,9 +76,34 @@ export const Harian = () => {
         }
     }
 
+    const iconTitle = () => {
+        const icon = {
+            icons: (
+                <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            )
+        }
+        return icon
+    }
+
+    const handleActionContent = (type, value) => {
+        if(type === 'View'){
+            fetchDataById(value.id)
+        }
+        const changeData = {
+            contentType: type,
+            value: value,
+            status: true
+        }
+        setStatusModal(changeData);
+        dispatch(setContentType(type));
+        dispatch(setSelectedId(value.id));
+    }
+
     return (
         <main>
-            <MainHeader>
+            {/* <MainHeader>
                 <HaederContent 
                     icon={
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-8 h-8">
@@ -130,7 +150,92 @@ export const Harian = () => {
                 isOpen={state.contentType === 'Delete' ? true : false}
                 onDeleteData={() => deleteData()}
                 closeModal={() => dispatch(setContentType('View'))}
+            /> */}
+            <SectionHeader 
+                title="Biaya Harian SPPD" 
+                icon={ iconTitle() }
+                count={ listData.length }
             />
+            <Content 
+                content="Biaya Harian SPPD"
+                data={listData}
+                // listTabData={DataTabsSupplier}
+                listContentTab={DataLabelHarian}
+                // onCallback={data => setActiveContent(data)}
+                // onSubmit={() => handleOnSubmit()}
+                onDeleteData={deleteData}
+                onCloseModal={(value) => {
+                    value && setIsAddData(null);
+                    setData(null);
+                }}
+                onChangePage={(value) => {
+                    setCurrentPage(value);
+                    fetchAllData(value);
+                }}
+                statusModal={statusModal}
+                currentPage={currentPage}
+                totalCount={listData.length}
+                renderContent={(value) => {
+                    return value.length === 0 ? (
+                        <tr>
+                            <td 
+                                colSpan="7"
+                                className={`px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-600 bg-gray-100 rounded-bl-lg rounded-br-lg text-center`}
+                            >
+                                Tidak Ada Data
+                            </td>
+                        </tr>
+                    ) : value.map((result, index) => {
+                        return (
+                            <tr key={index}>
+                                <TableContent className={`${index === value.length - 1 ? 'rounded-bl-lg' : '' }`}>{ result.provinsi }</TableContent>
+                                <TableContent>{ result.satuan }</TableContent>
+                                <TableContent>{ formatterCurrency.format(parseInt(result.luar_kota)) }</TableContent>
+                                <TableContent>{ formatterCurrency.format(parseInt(result.dalam_kota)) }</TableContent>
+                                <TableContent>{ formatterCurrency.format(parseInt(result.diklat)) }</TableContent>
+                                <TableContent className={`flex gap-2 text-sm text-[#202020] px-6 py-4 whitespace-nowrap ${index === value.length - 1 ? 'rounded-br-lg' : '' }`}>
+                                    {
+                                        ListContentTable.Action.map(resultItem => {
+                                            return (
+                                                <>
+                                                    <button data-tooltip-target="tooltip" onClick={() => handleActionContent(resultItem.type, result)} key={resultItem.type} className={`py-[6px] px-[10px] rounded-[50%] ${resultItem.color}`}>
+                                                        {resultItem.icon}
+                                                    </button>
+                                                </>
+                                                
+                                            )
+                                        })
+                                    }
+                                </TableContent>
+                            </tr>
+                        )
+                    })
+                }}
+            >
+                {
+                    state.contentType === 'View' ? (
+                        <View 
+                            data={data}
+                        />
+                    ) : (
+                        <FormInput 
+                            contentType={state.contentType}
+                            item={data}
+                            listProvince={state.listProvince}
+                            onCallback={(value) => {
+                                setIsAddData(value.success)
+                                fetchAllData(1)
+                                const changeData = {
+                                    contentType: null,
+                                    value: null,
+                                    status: false
+                                }
+                                setStatusModal(changeData);
+                            }}
+                        />
+                    )
+                }
+            </Content>
         </main>
     )
 }

@@ -1,4 +1,4 @@
-import { Button, InputSelect, SectionForm, TextInput, WrapperForm } from "Components"
+import { InputSelect, SectionForm, TextInput } from "Components"
 import { Form, Formik } from "formik"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
@@ -12,8 +12,9 @@ export const FormInput = ({
     listData = {
         jabatan: [],
         golongan: [],
-        pangkat: []
-    }
+        pangkat: [],
+        bidang: []
+    },
 }) => {
     const [data, setData] = useState({
         nama: '',
@@ -23,7 +24,9 @@ export const FormInput = ({
         phone: '',
         nama_bank: '',
         no_rek: '',
-        nama_rek: ''
+        nama_rek: '',
+        gol: '',
+        bidang: ''
     });
 
     useEffect(() => {
@@ -36,7 +39,9 @@ export const FormInput = ({
                 phone: item?.phone,
                 nama_bank: item?.nama_bank,
                 no_rek: item?.no_rek,
-                nama_rek: item?.nama_rek
+                nama_rek: item?.nama_rek,
+                gol: item?.gol,
+                bidang: item?.bidang
             });
         }
     }, [item]);
@@ -57,7 +62,7 @@ export const FormInput = ({
         try {
             const response = await EditPegawaiById(item?.id, payload);
             if (response.data) {
-                onCallback({success: true});
+                onCallback({success: true, contentType: 'Edit', data: payload});
                 toast.success("Berhasil Edit Data");
             }
         } catch (error) {
@@ -66,10 +71,6 @@ export const FormInput = ({
     }
 
     return (
-        <WrapperForm
-            title={`${contentType === 'Edit' ? 'Edit' : 'Tambah'} Data Biaya Harian SPPD`}
-        >
-
             <Formik
                 initialValues={{...data}}
                 validationSchema={EmployeSchema}
@@ -78,9 +79,7 @@ export const FormInput = ({
             >
                 {({errors, touched, handleChange, handleSubmit, values}) => (
                     <Form>
-                        <SectionForm
-                            column="1"
-                        >
+                        <SectionForm>
                             <TextInput 
                                 id="nama"
                                 name="nama"
@@ -91,10 +90,17 @@ export const FormInput = ({
                                 onChange={handleChange}
                             />
                             {touched.nama && errors.nama && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.nama}</span>}
+                        </SectionForm>
+                        <SectionForm
+                            gap="4"
+                            column="3"
+                            className="mt-8"
+                        >
 
                             <TextInput 
                                 id="nip"
                                 name="nip"
+                                type="number"
                                 withLabel
                                 label="NIP"
                                 placeholder="NIP"
@@ -102,14 +108,20 @@ export const FormInput = ({
                                 onChange={handleChange}
                             />
                             {touched.nip && errors.nip && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.nip}</span>}
-
-                        </SectionForm>
-
-                        <SectionForm
-                            gap="4"
-                            column="3"
-                            className="mt-8"
-                        >
+                            <InputSelect 
+                                id="bidang"
+                                name="bidang"
+                                withLabel
+                                label="Bidang"
+                                onChange={handleChange}
+                                value={values.bidang}
+                            >
+                                {
+                                    listData.bidang.map(value => {
+                                        return <option key={value.id} value={value.nama}>{value.nama}</option>
+                                    })
+                                }
+                            </InputSelect>
                             <InputSelect
                                 id="jabatan"
                                 name="jabatan"
@@ -124,6 +136,13 @@ export const FormInput = ({
                                     })
                                 }
                             </InputSelect>
+                        </SectionForm>
+
+                        <SectionForm
+                            gap="4"
+                            column="3"
+                            className="mt-8"
+                        >
 
                             <InputSelect 
                                 id="pangkat"
@@ -141,8 +160,12 @@ export const FormInput = ({
                             </InputSelect>
 
                             <InputSelect 
+                                id="gol"
+                                name="gol"
                                 withLabel
                                 label="Gol"
+                                onChange={handleChange}
+                                value={values.gol}
                             >
                                 {
                                     listData.golongan.map(value => {
@@ -150,13 +173,11 @@ export const FormInput = ({
                                     })
                                 }
                             </InputSelect>
-                        </SectionForm>
-
-                        <div className="mt-8">
+                            
                             <TextInput 
                                 id="phone"
                                 name="phone"
-                                type="tel"
+                                type="number"
                                 withLabel
                                 label="Kontak"
                                 placeholder="Kontak"
@@ -164,7 +185,7 @@ export const FormInput = ({
                                 onChange={handleChange}
                             />
                             {touched.phone && errors.phone && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.phone}</span>}
-                        </div>
+                        </SectionForm>
 
                         <SectionForm
                             column="3"
@@ -188,6 +209,7 @@ export const FormInput = ({
                                 <TextInput 
                                     id="no_rek"
                                     name="no_rek"
+                                    type="number"
                                     withLabel
                                     label="No Rek"
                                     placeholder="No Rek"
@@ -211,14 +233,24 @@ export const FormInput = ({
                             </div>
                         </SectionForm>
 
-                        <div className="mt-10 flex pb-10 md:pb-0 lg:pb-0 justify-center md:justify-end lg:justify-end">
-                            <Button onClick={handleSubmit} className="w-full md:w-60 lg:w-60" backgroundColor="bg-orange-500">Simpan</Button>
+                        <div className="mt-8 flex justify-end">
+                            <div className="flex gap-2 items-center">
+                                <button
+                                    type="button"
+                                    className="inline-flex justify-center rounded-full border border-transparent bg-[#3F7459] px-4 py-2 text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                                    onClick={() => {
+                                        handleSubmit()
+                                    }}
+                                >
+                                    {contentType === 'Add' ? 'Tambah Pegawai' : 'Edit Pegawai' }
+                                </button>
+                            </div>
                         </div>
                     </Form>
                 )}
 
             </Formik>
 
-        </WrapperForm>
+        // </WrapperForm>
     )
 }

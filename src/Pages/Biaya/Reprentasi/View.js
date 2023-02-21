@@ -1,52 +1,31 @@
-import { Table, TableContent } from "Components"
-import { setContentType, setSelectedId } from "Configs/Redux/reducers";
-import { useDispatch } from "react-redux";
-import { ActionData, formatterCurrency } from "utils";
+import { formatterCurrency } from "utils";
 
 export const View = ({
     data = []
 }) => {
-    const dispatch = useDispatch();
     return (
-        <Table
-            listLabel={[
-                {id: 'urain', name: 'Uraian'},
-                {id: 'satuan', name: 'Satuan'},
-                {id: 'luar_kota', name: 'Luar Kota'},
-                {id: 'dalam', name: 'Dalam Kota ( > 8 jam )'},
-                {id: 'aksi', name: 'Aksi'},
-            ]}
-        >
-            {
-                data.map(value => {
-                    return (
-                        <tr key={value.id}>
-                            <TableContent>{value.uraian}</TableContent>
-                            <TableContent>{value.satuan}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.luar_kota))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.luar_kota))}</TableContent>
-                            <TableContent>
-                                    {
-                                        ActionData.map(result => {
-                                            return result.isRender ? (
-                                                <button 
-                                                    className="mt-2" 
-                                                    key={result.id}
-                                                    onClick={() => {
-                                                        dispatch(setContentType(result.name))
-                                                        dispatch(setSelectedId(value.id))
-                                                    }}
-                                                >
-                                                    {result.icon}
-                                                </button>
-                                            ) : null
-                                        })
-                                    }
-                            </TableContent>
-                        </tr>
-                    )
-                })
-            }
-        </Table>
+        <div>
+            { data !== null ? (
+                <>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Uraian</div>
+                        <div className="col-span-3">: { data.uraian }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Satuan</div>
+                        <div className="col-span-3">: { data.satuan }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Luar Kota</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.luar_kota)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Dalam Kota</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.dalam_kota)) }</div>
+                    </div>
+                </>
+            ) : ( null )
+        }
+        </div>
     )
 }

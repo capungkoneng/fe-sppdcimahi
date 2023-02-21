@@ -11,5 +11,6 @@ export const KegiatanSchema = Yup.object().shape({
     kota: Yup.string().required('Kota harus diisi'),
     tahun_anggaran: Yup.string().required('Tahun Anggaran harus diisi'),
     keterangan: Yup.string().required('Keterangan harus diisi'),
+    berangkat: Yup.string().required('Kendaraan harus diisi'),
     // rekomendasi: Yup.string().required('Rekomendasi harus diisi'),
 })

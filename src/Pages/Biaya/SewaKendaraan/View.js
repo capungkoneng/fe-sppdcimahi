@@ -1,56 +1,39 @@
-import { Table, TableContent } from "Components"
-import { setContentType, setSelectedId } from "Configs/Redux/reducers";
-import { useDispatch } from "react-redux"
-import { ActionData, formatterCurrency } from "utils"
+import { formatterCurrency } from "utils";
 
 export const View = ({
     data = []
 }) => {
-    const dispatch = useDispatch();
     return (
-        <Table
-            listLabel={[
-                {id: 'provinsi', name: 'Provinsi'},
-                {id: 'satuan', name: 'Satuan'},
-                {id: 'roda_empat', name: 'Roda Empat'},
-                {id: 'Roda 6 / Bus Sedang', name: 'Roda 6 / Bus Sedang'},
-                {id: 'Roda6 / Bus Besar', name: 'Roda6 / Bus Besar'},
-                {id: 'taxi', name: 'Taxi'},
-                {id: 'aksi', name: 'Aksi'},
-            ]}
-        >
-            {
-                data.map(value => {
-                    return (
-                        <tr key={value.id}>
-                            <TableContent>{value.provinsi}</TableContent>
-                            <TableContent>{value.satuan}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.roda4))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.roda6_biskecil))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.roda6_bisbesar))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.taxi))}</TableContent>
-                            <TableContent>
-                                    {
-                                        ActionData.map(result => {
-                                            return result.isRender ? (
-                                                <button 
-                                                    className="mt-2" 
-                                                    key={result.id}
-                                                    onClick={() => {
-                                                        dispatch(setContentType(result.name))
-                                                        dispatch(setSelectedId(value.id))
-                                                    }}
-                                                >
-                                                    {result.icon}
-                                                </button>
-                                            ) : null
-                                        })
-                                    }
-                            </TableContent>
-                        </tr>
-                    )
-                })
-            }
-        </Table>
+        <div>
+            { data !== null ? (
+                <>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Provinsi</div>
+                        <div className="col-span-3">: { data.provinsi }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Satuan</div>
+                        <div className="col-span-3">: { data.satuan }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Roda Empat</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.roda4)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Roda 6 / Bus Sedang</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.roda6_biskecil)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Roda6 / Bus Besar</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.roda6_bisbesar)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Taxi</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.taxi)) }</div>
+                    </div>
+                </>
+            ) : ( null )
+        }
+        </div>
     )
 }

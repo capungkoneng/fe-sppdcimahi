@@ -1,54 +1,35 @@
-import { Table, TableContent } from "Components"
-import { setContentType, setSelectedId } from "Configs/Redux/reducers";
-import { useDispatch } from "react-redux";
-import { ActionData, formatterCurrency } from "utils";
+import { formatterCurrency } from "utils";
 
 export const View = ({
     data = []
 }) => {
-    const dispatch = useDispatch();
     return (
-        <Table
-            listLabel={[
-                {id: 'provinsi', name: 'Provinsi'},
-                {id: 'satuan', name: 'Satuan'},
-                {id: 'FullBoard Luar Kota', name: 'FullBoard Luar Kota'},
-                {id: 'FullBoard Dalam Kota', name: 'FullBoard Dalam Kota'},
-                {id: 'Full Day / Half Day Dalam Kota', name: 'Full Day / Half Day Dalam Kota'},
-                {id: 'aksi', name: 'Aksi'},
-            ]}
-        >
-            {
-                data.map(value => {
-                    return (
-                        <tr key={value.id}>
-                            <TableContent>{value.provinsi}</TableContent>
-                            <TableContent>{value.satuan}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.fullboard_luarkota))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.fullboard_dalemkota))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.fullday))}</TableContent>
-                            <TableContent>
-                                    {
-                                        ActionData.map(result => {
-                                            return result.isRender ? (
-                                                <button 
-                                                    className="mt-2" 
-                                                    key={result.id}
-                                                    onClick={() => {
-                                                        dispatch(setContentType(result.name))
-                                                        dispatch(setSelectedId(value.id))
-                                                    }}
-                                                >
-                                                    {result.icon}
-                                                </button>
-                                            ) : null
-                                        })
-                                    }
-                            </TableContent>
-                        </tr>
-                    )
-                })
-            }
-        </Table>
+        <div>
+            { data !== null ? (
+                <>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Provinsi</div>
+                        <div className="col-span-3">: { data.provinsi }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Satuan</div>
+                        <div className="col-span-3">: { data.satuan }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>FullBoard Luar Kota</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.fullboard_luarkota)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>FullBoard Dalam Kota</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.fullboard_dalemkota)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Full Day / Half Day Dalam Kota</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.fullday)) }</div>
+                    </div>
+                </>
+            ) : ( null )
+        }
+        </div>
     )
 }
