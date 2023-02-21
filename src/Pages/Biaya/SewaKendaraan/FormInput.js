@@ -1,4 +1,4 @@
-import { Button, InputSelect, SectionForm, TextInput, WrapperForm } from "Components"
+import { InputSelect, SectionForm, TextInput } from "Components"
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify";
@@ -57,9 +57,9 @@ export const FormInput = ({
     }
 
     return (
-        <WrapperForm
-            title={`${contentType === 'Edit' ? 'Edit' : 'Tambah'} Data Biaya Harian SPPD`}
-        >
+        // <WrapperForm
+        //     title={`${contentType === 'Edit' ? 'Edit' : 'Tambah'} Data Biaya Harian SPPD`}
+        // >
             <Formik
                 initialValues={data}
                 enableReinitialize
@@ -102,12 +102,7 @@ export const FormInput = ({
                                 {touched.satuan && errors.satuan && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.satuan}</span>}
                             </div>
                         </SectionForm>
-
-                        <SectionForm 
-                            column="4"
-                            gap="4"
-                            className="mt-8"
-                        >
+                        <div className="grid grid-cols-2 gap-4 mt-4">
                             <TextInput 
                                 id="roda4"
                                 name="roda4"
@@ -128,7 +123,9 @@ export const FormInput = ({
                                 onChange={handleChange}
                                 type="number"
                             />
+                        </div>
 
+                        <div className="grid grid-cols-2 gap-4 mt-4">
                             <TextInput 
                                 id="roda6_bisbesar"
                                 name="roda6_bisbesar"
@@ -150,14 +147,24 @@ export const FormInput = ({
                                 onChange={handleChange}
                                 type="number"
                             />
-                        </SectionForm>
+                        </div>
 
-                        <div className="mt-10 flex pb-10 md:pb-0 lg:pb-0 justify-center md:justify-end lg:justify-end">
-                            <Button onClick={handleSubmit} className="w-full md:w-60 lg:w-60" backgroundColor="bg-orange-500">Simpan</Button>
+                        <div className="mt-8 flex justify-end">
+                            <div className="flex gap-2 items-center">
+                                <button
+                                    type="button"
+                                    className="inline-flex justify-center rounded-full border border-transparent bg-[#3F7459] px-4 py-2 text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                                    onClick={() => {
+                                        handleSubmit()
+                                    }}
+                                >
+                                    {contentType === 'Add' ? 'Tambah Sewa Kendaraan' : 'Edit Sewa Kendaraan' }
+                                </button>
+                            </div>
                         </div>
                     </Form>
                 )}
             </Formik>
-        </WrapperForm>
+        // </WrapperForm>
     )
 }

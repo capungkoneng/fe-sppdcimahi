@@ -6,5 +6,7 @@ export const EmployeSchema = Yup.object().shape({
     phone: Yup.string().required("Kontak harus di isi"),
     nama_bank: Yup.string().required("Nama Bank harus di isi"),
     no_rek: Yup.string().required("No Rek harus di isi"),
-    nama_rek: Yup.string().required("Nama Rek harus di isi")
+    nama_rek: Yup.string().required("Nama Rek harus di isi"),
+    gol: Yup.string().required("Golongan harus di isi"),
+    bidang: Yup.string().required("Bidang harus di isi")
 })

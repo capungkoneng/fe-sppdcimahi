@@ -1,8 +1,9 @@
-import { Button, SectionForm, TextInput, WrapperForm } from "Components"
-import { Form, Formik } from "formik"
-import { useEffect, useState } from "react"
+import { SectionForm, TextInput, TextArea } from "Components";
+import { Form, Formik } from "formik";
+import { useEffect, useState } from "react";
 import { AddDataRepresentais, EditDataRepresentasi } from "Services";
 import { RepresentasiSchema } from "./data/RepresentasiSchema";
+import { toast } from "react-toastify";
 
 export const FormInput = ({
     onCallback = () => {},
@@ -33,6 +34,7 @@ export const FormInput = ({
             const response = await AddDataRepresentais(payload);
             if (response.data) {
                 onCallback({success: true});
+                toast.success("Berhasil tambah data");
             }
         } catch (error) {
             console.log(error);
@@ -44,6 +46,7 @@ export const FormInput = ({
             const response = await EditDataRepresentasi(item?.id, payload);
             if (response.data) {
                 onCallback({success: true});
+                toast.success("Berhasil ubah data");
             }
         } catch (error) {
             console.log(error);
@@ -51,9 +54,9 @@ export const FormInput = ({
     }
     
     return (
-        <WrapperForm
-            title={`${contentType === 'Edit' ? 'Edit' : 'Tambah'} Data Biaya Representasi SPPD`}
-        >
+        // <WrapperForm
+        //     title={`${contentType === 'Edit' ? 'Edit' : 'Tambah'} Data Biaya Representasi SPPD`}
+        // >
 
             <Formik
                 initialValues={data}
@@ -67,7 +70,7 @@ export const FormInput = ({
                             column="1"
                         >
                             <div>
-                                <TextInput 
+                                <TextArea 
                                     id="uraian"
                                     name="uraian"
                                     withLabel
@@ -126,12 +129,22 @@ export const FormInput = ({
                             </div>
                         </SectionForm>
 
-                        <div className="mt-10 flex pb-10 md:pb-0 lg:pb-0 justify-center md:justify-end lg:justify-end">
-                            <Button onClick={handleSubmit} className="w-full md:w-60 lg:w-60" backgroundColor="bg-orange-500">Simpan</Button>
+                        <div className="mt-8 flex justify-end">
+                            <div className="flex gap-2 items-center">
+                                <button
+                                    type="button"
+                                    className="inline-flex justify-center rounded-full border border-transparent bg-[#3F7459] px-4 py-2 text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                                    onClick={() => {
+                                        handleSubmit()
+                                    }}
+                                >
+                                    {contentType === 'Add' ? 'Tambah Biaya Representasi SPPD' : 'Edit Representasi SPPD' }
+                                </button>
+                            </div>
                         </div>
                     </Form>
                 )}
             </Formik>
-        </WrapperForm>
+        // </WrapperForm>
     )
 }

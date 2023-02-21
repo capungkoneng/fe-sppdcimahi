@@ -1,58 +1,43 @@
-import { Table, TableContent } from "Components"
-import { setContentType, setSelectedId } from "Configs/Redux/reducers";
-import { useDispatch } from "react-redux"
-import { ActionData, formatterCurrency } from "utils"
+import { formatterCurrency } from "utils";
 
 export const View = ({
     data = []
 }) => {
-    const dispatch = useDispatch();
     return (
-        <Table
-            listLabel={[
-                {id: 'provinsi', name: 'Provinsi'},
-                {id: 'satuan', name: 'Satuan'},
-                {id: 'Pejabat / Eselon I', name: 'Pejabat / Eselon I'},
-                {id: 'Pejabat / Eselon II', name: 'Pejabat / Eselon II'},
-                {id: 'Eselon III / Gol IV', name: 'Eselon III / Gol IV'},
-                {id: 'Eselon IV / Gol III', name: 'Eselon IV / Gol III'},
-                {id: 'Gol I / Gol II', name: 'Gol I / Gol II'},
-                {id: 'aksi', name: 'Aksi'},
-            ]}
-        >
-            {
-                data.map(value => {
-                    return (
-                        <tr key={value.id}>
-                            <TableContent>{value.provinsi}</TableContent>
-                            <TableContent>{value.satuan}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.peselon1))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.peselon2))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.g2eselon1))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.g3eselon3))}</TableContent>
-                            <TableContent>{formatterCurrency.format(parseInt(value.g4eselon4))}</TableContent>
-                            <TableContent>
-                                    {
-                                        ActionData.map(result => {
-                                            return result.isRender ? (
-                                                <button 
-                                                    className="mt-2" 
-                                                    key={result.id}
-                                                    onClick={() => {
-                                                        dispatch(setContentType(result.name))
-                                                        dispatch(setSelectedId(value.id))
-                                                    }}
-                                                >
-                                                    {result.icon}
-                                                </button>
-                                            ) : null
-                                        })
-                                    }
-                            </TableContent>
-                        </tr>
-                    )
-                })
-            }
-        </Table>
+        <div>
+            { data !== null ? (
+                <>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Provinsi</div>
+                        <div className="col-span-3">: { data.provinsi }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Satuan</div>
+                        <div className="col-span-3">: { data.satuan }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Pejabat / Eselon I</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.peselon1)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Pejabat / Eselon II</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.peselon2)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Eselon III / Gol IV</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.g2eselon1)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Eselon IV / Gol III</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.g3eselon3)) }</div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                        <div>Gol I / Gol II</div>
+                        <div className="col-span-3">: { formatterCurrency.format(parseInt(data.g4eselon4)) }</div>
+                    </div>
+                </>
+            ) : ( null )
+        }
+        </div>
     )
 }

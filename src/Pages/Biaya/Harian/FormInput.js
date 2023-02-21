@@ -1,4 +1,4 @@
-import { Button, InputSelect, SectionForm, TextInput, WrapperForm } from "Components"
+import { InputSelect, SectionForm, TextInput } from "Components"
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify";
@@ -56,9 +56,6 @@ export const FormInput = ({
         }
     }
     return (
-        <WrapperForm
-            title={`${contentType === 'Edit' ? 'Edit' : 'Tambah'} Data Biaya Harian SPPD`}
-        >
 
             <Formik
                 initialValues={data}
@@ -110,12 +107,12 @@ export const FormInput = ({
 
                             <div>
                                 <TextInput 
-                                    id="jumlah"
-                                    name="jumlah"
+                                    id="luar_kota"
+                                    name="luar_kota"
                                     withLabel
-                                    label="jumlah"
-                                    placeholder="jumlah"
-                                    value={values.jumlah}
+                                    label="Luar Kota"
+                                    placeholder="Luar Kota"
+                                    value={values.luar_kota}
                                     onChange={handleChange}
                                     type="number"
                                 />
@@ -151,12 +148,21 @@ export const FormInput = ({
                             {touched.diklat && errors.diklat && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.diklat}</span>}
                         </div>
 
-                        <div className="mt-10 flex pb-10 md:pb-0 lg:pb-0 justify-center md:justify-end lg:justify-end">
-                            <Button onClick={handleSubmit} className="w-full md:w-60 lg:w-60" backgroundColor="bg-orange-500">Simpan</Button>
+                        <div className="mt-8 flex justify-end">
+                            <div className="flex gap-2 items-center">
+                                <button
+                                    type="button"
+                                    className="inline-flex justify-center rounded-full border border-transparent bg-[#3F7459] px-4 py-2 text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                                    onClick={() => {
+                                        handleSubmit()
+                                    }}
+                                >
+                                    {contentType === 'Add' ? 'Tambah Biaya Harian SPPD' : 'Edit Biaya Harian SPPD' }
+                                </button>
+                            </div>
                         </div>
                     </Form>
                 )}
             </Formik>
-        </WrapperForm>
     )
 }

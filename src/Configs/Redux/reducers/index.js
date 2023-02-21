@@ -10,7 +10,8 @@ const initialState = {
     username: null,
     contentType: 'View',
     selectedId: null,
-    listProvince: []
+    listProvince: [],
+    showSidebar: false,
 };
 
 export const RootSlice = createSlice({
@@ -30,6 +31,7 @@ export const {
     setUsername,
     setContentType,
     setSelectedId,
-    setListProvince
+    setListProvince,
+    setSideBar
 } = RootSlice.actions;
 export default RootSlice.reducer;

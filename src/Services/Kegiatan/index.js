@@ -5,3 +5,4 @@ export const GetKegiatanById = id => Axios.get(`/kegiatan/${id}`);
 export const AddKegiatan = payload => Axios.post('/kegiatan', payload);
 export const EditKegiatan = (id, payload) => Axios.put(`/kegiatan/${id}`, payload);
 export const DeleteKegiatan = (id) => Axios.delete(`/kegiatan/${id}`);
+export const ApproveKegiatan = (payload) => Axios.post('/kegiatan/namapeg', payload);

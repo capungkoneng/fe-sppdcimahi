@@ -1,56 +1,40 @@
-import { Table, TableContent } from "Components"
-import { setContentType, setSelectedId } from "Configs/Redux/reducers"
-import { useDispatch } from "react-redux"
-import { ActionData } from "utils"
-
-export const View = ({data = []}) => {
-    const dispatch = useDispatch();
+export const View = ({item = []}) => {
     return (
         <section>
-            <Table
-                listLabel={[
-                    {id: 'nama', name: 'Nama'},
-                    {id: 'nip', name: 'NIP'},
-                    {id: 'jabatan', name: 'Jabatan'},
-                    {id: 'pangkat', name: 'Pangkat'},
-                    {id: 'gol', name: 'Gol'},
-                    {id: 'kontak', name: 'Kontak'},
-                    {id: 'aksi', name: 'Aksi'},
-                ]}
-            >
-                {
-                    data.map((value, index) => {
-                        return (
-                            <tr key={index}>
-                                <TableContent>{value.nama}</TableContent>
-                                <TableContent>{value.nip}</TableContent>
-                                <TableContent>{value.jabatan}</TableContent>
-                                <TableContent>{value.pangkat}</TableContent>
-                                <TableContent>{value.pangkat}</TableContent>
-                                <TableContent>{value.phone}</TableContent>
-                                <TableContent>
-                                    {
-                                        ActionData.map(result => {
-                                            return result.isRender ? (
-                                                <button 
-                                                    className="mt-2" 
-                                                    key={result.id}
-                                                    onClick={() => {
-                                                        dispatch(setContentType(result.name))
-                                                        dispatch(setSelectedId(value.id))
-                                                    }}
-                                                >
-                                                    {result.icon}
-                                                </button>
-                                            ) : null
-                                        })
-                                    }
-                                </TableContent>
-                            </tr>
-                        )
-                    })
-                }
-            </Table>
+            {
+                item.length !== 0 ? (
+                    <>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div>Nama</div>
+                            <div>: { item.nama }</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-4 mt-1">
+                            <div>NIP</div>
+                            <div>: { item.nip }</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-4 mt-1">
+                            <div>Bidang</div>
+                            <div>: { item.bidang }</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-4 mt-1">
+                            <div>Jabatan</div>
+                            <div>: { item.jabatan }</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-4 mt-1">
+                            <div>Pangkat</div>
+                            <div>: { item.pangkat }</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-4 mt-1">
+                            <div>Golongan</div>
+                            <div>: { item.gol }</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-4 mt-1">
+                            <div>Kontak</div>
+                            <div>: { item.phone }</div>
+                        </div>
+                    </>
+                ) : <></>
+            }
         </section>
     )
 }

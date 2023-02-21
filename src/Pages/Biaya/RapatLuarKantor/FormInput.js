@@ -57,9 +57,9 @@ export const FormInput = ({
     }
 
     return (
-        <WrapperForm
-            title={`${contentType === 'Edit' ? 'Edit' : 'Tambah'} Data Biaya Harian SPPD`}
-        >
+        // <WrapperForm
+        //     title={`${contentType === 'Edit' ? 'Edit' : 'Tambah'} Data Biaya Harian SPPD`}
+        // >
 
             <Formik
                 initialValues={data}
@@ -154,14 +154,24 @@ export const FormInput = ({
                             </div>
                         </SectionForm>
 
-                        <div className="mt-10 flex pb-10 md:pb-0 lg:pb-0 justify-center md:justify-end lg:justify-end">
-                            <Button onClick={handleSubmit} className="w-full md:w-60 lg:w-60" backgroundColor="bg-orange-500">Simpan</Button>
+                        <div className="mt-8 flex justify-end">
+                            <div className="flex gap-2 items-center">
+                                <button
+                                    type="button"
+                                    className="inline-flex justify-center rounded-full border border-transparent bg-[#3F7459] px-4 py-2 text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                                    onClick={() => {
+                                        handleSubmit()
+                                    }}
+                                >
+                                    {contentType === 'Add' ? 'Tambah Biaya Penginapan SPPD' : 'Edit Penginapan SPPD' }
+                                </button>
+                            </div>
                         </div>
                     </Form>
                 )}
 
             </Formik>
 
-        </WrapperForm>
+        // </WrapperForm>
     )
 }

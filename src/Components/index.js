@@ -9,3 +9,7 @@ export * from './Wrapper';
 export * from './SectionForm';
 export * from './InputSelect';
 export * from './TextArea';
+export * from './SectionHeader';
+export * from './Content';
+export * from './Modal';
+export * from './Pagination';
