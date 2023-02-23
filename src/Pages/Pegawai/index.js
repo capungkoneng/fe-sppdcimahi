@@ -21,6 +21,7 @@ export const Pegawai = () => {
     const [listGolongan, setListGolongan] = useState([]);
     const [listBidang, setListBidang] = useState([]);
     const [item, setItem] = useState(null);
+    const [totalCount, setTotalCount] = useState(0);
     const [isAddData, setIsAddData] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [statusModal, setStatusModal] = useState({
@@ -57,6 +58,7 @@ export const Pegawai = () => {
             const response = await GetAllPegawai({page: value, perpage: 10});
             if (response.data.result) {
                 setListData(response.data.result);
+                setTotalCount(response.data.totalData)
             }
         } catch (error) {
             console.log(error);
@@ -163,7 +165,7 @@ export const Pegawai = () => {
             <SectionHeader 
                 title="Pegawai" 
                 icon={ iconTitle() }
-                count={ listData.length }
+                count={ totalCount }
             />
             <Content 
                 content="Pegawai"
@@ -183,7 +185,7 @@ export const Pegawai = () => {
                 }}
                 statusModal={statusModal}
                 currentPage={currentPage}
-                totalCount={listData.length}
+                totalCount={totalCount}
                 renderContent={(value) => {
                     return value.length === 0 ? (
                         <tr>

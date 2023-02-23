@@ -41,7 +41,7 @@ export const Auth = () => {
                 </p>
             </section>
 
-            <section className="w-full md:w-1/2 p-20 px-8 md:px-20 lg:px-32 lg:w-1/2 bg-green-500 flex flex-col justify-center">
+            <section className="w-full md:w-1/2 p-20 px-8 md:px-20 lg:px-32 lg:w-1/2 bg-[#3F7459] flex flex-col justify-center">
             <Formik
                 initialValues={data}
                 validationSchema={AuthSchema}
@@ -91,9 +91,7 @@ export const Auth = () => {
                         />
                         {touched.password && errors.password && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.password}</span>}
 
-                        <Button onClick={handleSubmit} className="mt-8">
-                            Login
-                        </Button>
+                        <Button onClick={handleSubmit} className="mt-8 hover:bg-blue-500" text = 'Login'/>
                     </Form>
                 )}
             </Formik>
