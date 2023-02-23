@@ -16,6 +16,7 @@ export const Harian = () => {
     const [listData, setListData] = useState([]);
     const [data, setData] = useState(null);
     const [isAddData, setIsAddData] = useState(false);
+    const [totalCount, setTotalCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [statusModal, setStatusModal] = useState({
         contentType: null,
@@ -56,6 +57,7 @@ export const Harian = () => {
             const response = await GetAllDataHarian({page: value, perpage: 10});
             if (response.data.result) {
                 setListData(response.data.result);
+                setTotalCount(response.data.totalData)
             }
         } catch (error) {
             console.log(error);
@@ -154,7 +156,7 @@ export const Harian = () => {
             <SectionHeader 
                 title="Biaya Harian SPPD" 
                 icon={ iconTitle() }
-                count={ listData.length }
+                count={ totalCount }
             />
             <Content 
                 content="Biaya Harian SPPD"
@@ -174,7 +176,7 @@ export const Harian = () => {
                 }}
                 statusModal={statusModal}
                 currentPage={currentPage}
-                totalCount={listData.length}
+                totalCount={totalCount}
                 renderContent={(value) => {
                     return value.length === 0 ? (
                         <tr>

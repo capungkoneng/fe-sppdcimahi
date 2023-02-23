@@ -7,6 +7,7 @@ import { GetAllProvince } from "Services";
 import { Navbar } from "./Navbar";
 import { Sidebar } from "./Sidebar";
 import { ToastContainer } from 'react-toastify';
+import { AuthLogout } from "Services/Auth";
 import 'react-toastify/dist/ReactToastify.css';
 
 export const Layout = () => {
@@ -37,6 +38,23 @@ export const Layout = () => {
         setShowSidebar(!showSidebar);
     }
 
+    const logout = async () => {
+        const header = {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        }
+        try {
+            const response = await AuthLogout(header);
+            if (response.data.success) {
+                localStorage.removeItem('token')
+                window.location.reload()
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const fetchProvince = async () => {
         try {
             const response = await GetAllProvince();
@@ -60,6 +78,7 @@ export const Layout = () => {
             <div ref={mainRef} className="md:ml-64 transition-all duration-500 ease-in-out">
                 <Navbar 
                     onClick={() => handleClick()}
+                    logout={logout}
                 />
                 <div className="p-3">
                     <div className="mt-4 lg:mt-4 md:mt-2">

@@ -1,4 +1,4 @@
-import { SectionHeader, Content, TableContent } from "Components"
+import { SectionHeader, Content, TableContent } from "Components";
 import { ListContentTable } from "Components/Content/data";
 import { setContentType, setSelectedId } from "Configs/Redux/reducers";
 import { useEffect, useState } from "react"
@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { GetAllBerkendara, GetAllCity, GetAllJabatan } from "Services";
 import { DeleteKegiatan, GetAllKegiatan, GetKegiatanById } from "Services/Kegiatan";
-import { GetAllPegawai } from "Services/Pegawai";
+import { GetAllListPegawai } from "Services/Pegawai";
 import { DataLabelKegiatan } from "./data/tabekKegiatan";
 import { FormInput } from "./FormInput";
-import { View } from "./View"
+import { View } from "./View";
 import moment from "moment";
 
 export const Kegiatan = () => {
@@ -21,6 +21,7 @@ export const Kegiatan = () => {
     const [listJabatan, setListJabatan] = useState([]);
     const [listPegawai, setListpegawai] = useState([]);
     const [data, setData] = useState(null);
+    const [totalCount, setTotalCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [isAddData, setIsAddData] = useState(false);
     const [statusModal, setStatusModal] = useState({
@@ -103,6 +104,7 @@ export const Kegiatan = () => {
             const response = await GetAllKegiatan({page: value, perpage: 10});
             if (response.data.result) {
                 setListData(response.data.result);
+                setTotalCount(response.data.totalData)
             }
         } catch (error) {
             setListData([]);
@@ -147,10 +149,10 @@ export const Kegiatan = () => {
         dispatch(setSelectedId(value.id));
     }
 
-    const getPegawai = async (jabatan) => {
+    const getPegawai = async () => {
         
         try {
-            const response = await GetAllPegawai(jabatan);
+            const response = await GetAllListPegawai();
             if (response.data) {
                 setListpegawai(response.data.result);
             } 
@@ -164,7 +166,7 @@ export const Kegiatan = () => {
             <SectionHeader 
                 title="Kegiatan" 
                 icon={ iconTitle() }
-                count={ listData.length }
+                count={ totalCount }
             />
             <Content 
                 content="Kegiatan"
@@ -184,7 +186,7 @@ export const Kegiatan = () => {
                 }}
                 statusModal={statusModal}
                 currentPage={currentPage}
-                totalCount={listData.length}
+                totalCount={totalCount}
                 renderContent={(value) => {
                     return value.length === 0 ? (
                         <tr>

@@ -2,8 +2,10 @@ import { Dropdown } from "../Dropdown";
 import LogoCimahi from 'Assets/icons/logo-kota-cimahi.png';
 
 export const Navbar = ({
-    onClick = () => {}
+    onClick = () => {},
+    logout = () => {}
 }) => {
+
     return (
                 <nav
                     className="w-full bg-white flex justify-between items-center transition-all duration-500 py-4 ease-in-out shadow-md rounded-md">
@@ -26,12 +28,14 @@ export const Navbar = ({
                         <h2 className="text-2xl font-bold">
                             PEMERINTAH KOTA CIMAHI
                         </h2>
-                        <img src={LogoCimahi} className="ml-3 h-8 w-8" />
+                        <img src={LogoCimahi} className="ml-3 h-8 w-8" alt="logo"/>
                     </div>
                 </div>
                 <div className="mr-8 hidden md:block lg:block">
                     <div className="flex items-center">
-                        <Dropdown />
+                        <Dropdown 
+                            onLogout={logout}
+                        />
                     </div>
                 </div>
             </nav>

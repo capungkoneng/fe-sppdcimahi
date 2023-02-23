@@ -1,86 +1,125 @@
-import { Button, InputSelect, SectionForm, TextArea, TextInput, WrapperForm } from "Components"
+import { SectionForm, InputSelect, TextInput } from "Components";
+import { Form, Formik } from "formik";
+import { SptSchema } from "./data/SptSchema";
+import { useRef, useEffect, useState } from "react";
+import { AddSpt, EditSptById } from "Services/Spt";
+import { toast } from "react-toastify";
 
-export const FormInput = () => {
+export const FormInput = ({
+    onCallback = () => {},
+    listKegiatan=[],
+    item = null,
+    contentType="Add"
+}) => {
+    const formikRef = useRef();
+    const [data, setData] = useState({
+        no_spt: "",
+        no_surat: "",
+        kegiatan_id: "",
+        id: ""
+    });
+
+    useEffect(() => {
+        if (item) {
+            setData({
+                no_spt: item.no_spt,
+                no_surat: item.kegiatan.no_surat,
+                kegiatan_id: item.kegiatan.id,
+                id: item.id
+            });
+        }
+    }, [item]);
+
+    const addData = async (payload) => {
+        try {
+            const response = await AddSpt(payload);
+            if (response.data) {
+                onCallback({success: true});
+                toast.success("Berhasil tambah data");
+            }
+        } catch (error) {
+            toast.error("Gagal tambah data");
+            console.log(error)
+        }
+    }
+
+    const editData = async (payload) => {
+        delete payload['no_surat']
+        try {
+            const response = await EditSptById(item?.id,payload);
+            if (response.data) {
+                onCallback({success: true});
+                toast.success("Berhasil edit data");
+            }
+        } catch (error) {
+            toast.error("Gagal edit data");
+            console.log(error)
+        }
+    }
+
     return (
-        <WrapperForm
-            title="Tambah Data SPT"
+        <Formik
+            innerRef={formikRef}
+            initialValues={data}
+            enableReinitialize
+            validationSchema={SptSchema}
+            onSubmit={value => contentType === 'Edit' ? editData(value) : addData(value)}
         >
-            <TextInput 
-                withLabel
-                label="Nomor SPT"
-                placeholder="Nomor SPT"
-            />
+            {({errors, touched, values, handleChange, handleSubmit, setFieldValue}) => (
+                <Form>
+                    <SectionForm
+                        column="1"
+                        gap="4"
+                    >
+                        <TextInput 
+                            id="no_spt"
+                            name="no_spt"
+                            withLabel
+                            label="No SPT"
+                            value={values.no_spt}
+                            onChange={handleChange}
+                        />
+                        {touched.no_spt && errors.no_spt && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.no_spt}</span>}
+                    </SectionForm>
+                    <SectionForm
+                        column="1"
+                        gap="4"
+                        className="mt-8"
+                    >
+                        <InputSelect 
+                            id="kegiatan_id"
+                            name="kegiatan_id"
+                            withLabel
+                            label="No Dasar SPT"
+                            value={values.no_surat}
+                            onChange={handleChange}
+                        >
+                        {
+                            listKegiatan.map((value, index) => {
+                                return <option key={index} value={value.id}>{value.no_surat}</option>
+                            })
+                        }
+                        </InputSelect>
+                        {touched.kegiatan_id && errors.kegiatan_id && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.kegiatan_id}</span>}
+                    </SectionForm>
 
-            <div className="grid md:grid-cols-3 gap-4 mt-4">
-                <InputSelect 
-                    withLabel
-                    label="Nomor Dasar SPT"
-                />
+                        <div className="mt-8 flex justify-end">
+                            <div className="flex gap-2 items-center">
+                                <button
+                                    type="button"
+                                    className="inline-flex justify-center rounded-full border border-transparent bg-[#3F7459] px-4 py-2 text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                                    onClick={() => {
+                                        handleSubmit()
+                                    }}
+                                >
+                                    {contentType === 'Add' ? 'Tambah SPT' : 'Edit SPT' }
+                                </button>
+                            </div>
+                        </div>
+                </Form>
+            )}
+        </Formik>
 
-                <InputSelect 
-                    withLabel
-                    label="Tujuan Provinsi"
-                />
 
-                <InputSelect 
-                    withLabel
-                    label="Kota"
-                />
-            </div>
-
-            <div className="mt-4">
-                <TextArea
-                    withLabel
-                    label="Keperluan"
-                    placeholder="Keperluan"
-                />
-            </div>
-
-            <div className="mt-8">
-                <InputSelect 
-                    withLabel
-                    label="Berkendara"
-                />
-
-                <SectionForm
-                    column="4"
-                    gap="4"
-                    className="mt-4"
-                >
-                    <TextInput 
-                        withLabel
-                        label="Tgl Berangkat"
-                        placeholder="Tgl Berangkat"
-                    />
-                    <TextInput 
-                        withLabel
-                        label="Tgl Mulai"
-                        placeholder="Tgl Mulai"
-                    />
-                    <TextInput 
-                        withLabel
-                        label="Tgl Selesai"
-                        placeholder="Tgl Selesai"
-                    />
-                    <TextInput 
-                        withLabel
-                        label="Tahun Anggaran"
-                        placeholder="Tahun Anggaran"
-                    />
-                </SectionForm>
-
-                <div className="mt-4">
-                    <TextArea 
-                        withLabel
-                        label="Keterangan"
-                        placeholder="Keterangan"
-                    />
-                </div>
-            </div>
-
-            <div className="mt-10 flex pb-10 md:pb-0 lg:pb-0 justify-center md:justify-end lg:justify-end">
-                <Button className="w-full md:w-60 lg:w-60" backgroundColor="bg-orange-500">Simpan</Button>
-            </div>
-        </WrapperForm>
     )
 }

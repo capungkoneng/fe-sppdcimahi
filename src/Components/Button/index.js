@@ -1,5 +1,5 @@
 export const Button = ({
-    backgroundColor = 'bg-blue-500',
+    backgroundColor = 'bg-blue-900',
     color = 'text-white',
     onClick,
     text = 'Click Me',
