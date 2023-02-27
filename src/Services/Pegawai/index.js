@@ -11,3 +11,5 @@ export const GetPegawaiById = (id) => Axios.get(`/pegawai/${id}`);
 export const EditPegawaiById = (id, payload) => Axios.put(`/pegawai/${id}`, payload);
 export const DeletePegawai = (id) => Axios.delete(`/pegawai/${id}`);
 export const GetPegawaiByJabatan = (jabatan) => Axios.get(`/alljabat/${jabatan}`);
+export const GetPegawaiKepalaDinas = () => Axios.get(`/pegawaikepala`);
+export const GetPegawaiKepalaDinasBidang = () => Axios.get(`/pegawaikepalaB`);

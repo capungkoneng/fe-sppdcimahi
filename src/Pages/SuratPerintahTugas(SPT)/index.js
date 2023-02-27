@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAllSpt, GetSptById, DeleteSpt } from "Services/Spt";
 import { GetKegiatanApprove } from "Services/Kegiatan";
+import { GetPegawaiKepalaDinas } from "Services/Pegawai";
 import { DataLabelSpt } from "./data/tabelSpt";
 import { toast } from "react-toastify";
 import { FormInput } from "./FormInput";
-import { View } from "./View";
+import { Views } from "./View";
 import moment from "moment";
 
 export const Spt = () => {
@@ -16,6 +17,7 @@ export const Spt = () => {
     const dispatch = useDispatch();
     const [listKegiatan, setListKegiatan] = useState([]);
     const [listData, setListData] = useState([]);
+    const [pegawaiKepala, setPegawaiKepala] = useState(null);
     const [data, setData] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isAddData, setIsAddData] = useState(false);
@@ -35,7 +37,8 @@ export const Spt = () => {
 
     useEffect(() => {
         fetchAllData(1);
-        fetchDataKegiatan()
+        fetchDataKegiatan();
+        fetchPegawaiKepala();
     }, []);
 
     useEffect(() => {
@@ -79,6 +82,17 @@ export const Spt = () => {
         }
     }
 
+    const fetchPegawaiKepala = async () => {
+        try {
+            const response = await GetPegawaiKepalaDinas();
+            if (response.data.result) {
+                setPegawaiKepala(response.data.result);
+            }
+        } catch (error) {
+            
+        }
+    }
+
     const deleteData = async () => {
         try {
             const response = await DeleteSpt(state.selectedId);
@@ -116,6 +130,7 @@ export const Spt = () => {
         dispatch(setContentType(type));
         dispatch(setSelectedId(value.id));
     }
+    console.log(data)
 
     return (
         <main>
@@ -187,12 +202,12 @@ export const Spt = () => {
                     ) : value.map((result, index) => {
                         return (
                             <tr key={index}>
-                                <TableContent className={`${index === value.length - 1 ? 'rounded-bl-lg' : '' }`}>{ result.no_spt }</TableContent>
-                                <TableContent>{ result.kegiatan.keperluan }</TableContent>
-                                <TableContent>{ moment(result.kegiatan.tgl_berangkat).format('DD-MMM-YYYY') }</TableContent>
-                                <TableContent>{ moment(result.kegiatan.tgl_mulai).format('DD-MMM-YYYY') }</TableContent>
-                                <TableContent>{ moment(result.kegiatan.tgl_selesai).format('DD-MMM-YYYY') }</TableContent>
-                                <TableContent>
+                                <TableContent className={`${index === value.length - 1 ? 'rounded-bl-lg' : '' }w-[10%] align-text-top`}>{ result.no_spt }</TableContent>
+                                <TableContent className="w-[30%] text-justify align-text-top">{ result.kegiatan.keperluan }</TableContent>
+                                <TableContent className="align-text-top whitespace-nowrap">{ moment(result.kegiatan.tgl_berangkat).format('DD-MMM-YYYY') }</TableContent>
+                                <TableContent className="align-text-top whitespace-nowrap">{ moment(result.kegiatan.tgl_mulai).format('DD-MMM-YYYY') }</TableContent>
+                                <TableContent className="align-text-top whitespace-nowrap">{ moment(result.kegiatan.tgl_selesai).format('DD-MMM-YYYY') }</TableContent>
+                                <TableContent className="align-text-top">
                                     <ul>
                                         {
                                             result.kegiatan.lsnamajbatan.map( data => {
@@ -226,8 +241,9 @@ export const Spt = () => {
             >
                 {
                     state.contentType === 'View' ? (
-                        <View 
+                        <Views
                             data={data}
+                            pegawaiKepala={pegawaiKepala}
                             onCallback={(value) => {
                                 setIsAddData(value.success)
                                 fetchAllData(1)

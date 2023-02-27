@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetAllSptNoPage } from "Services/Spt";
 import { GetAllSpd, GetSpdById, DeleteSpd } from "Services/Spd";
 import { DataLabelSpd } from "./data/tabelSpd";
+import { GetPegawaiKepalaDinas, GetPegawaiKepalaDinasBidang } from "Services/Pegawai";
 import { toast } from "react-toastify";
 import { FormInput } from "./FormInput";
 import { View } from "./View";
@@ -17,6 +18,8 @@ export const Spd = () => {
     const [listSpt, setListSpt] = useState([]);
     const [listData, setListData] = useState([]);
     const [data, setData] = useState(null);
+    const [pegawaiKepala, setPegawaiKepala] = useState(null);
+    const [pegawaiKepalaDinas, setPegawaiKepalaDinas] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isAddData, setIsAddData] = useState(false);
     const [statusModal, setStatusModal] = useState({
@@ -35,7 +38,9 @@ export const Spd = () => {
 
     useEffect(() => {
         fetchAllData(1);
-        fetchDataSpt()
+        fetchDataSpt();
+        fetchPegawaiKepala();
+        fetchPegawaiKepalaBidang();
     }, []);
 
     useEffect(() => {
@@ -88,6 +93,28 @@ export const Spd = () => {
             }
         } catch (error) {
             toast.success("Gagal hapus data");
+        }
+    }
+
+    const fetchPegawaiKepala = async () => {
+        try {
+            const response = await GetPegawaiKepalaDinas();
+            if (response.data.result) {
+                setPegawaiKepala(response.data.result);
+            }
+        } catch (error) {
+            
+        }
+    }
+
+    const fetchPegawaiKepalaBidang = async () => {
+        try {
+            const response = await GetPegawaiKepalaDinasBidang();
+            if (response.data.result) {
+                setPegawaiKepalaDinas(response.data.result);
+            }
+        } catch (error) {
+            
         }
     }
 
@@ -184,6 +211,8 @@ export const Spd = () => {
                     state.contentType === 'View' ? (
                         <View 
                             data={data}
+                            pegawaiKepala={pegawaiKepala}
+                            pegawaiKepalaDinas={pegawaiKepalaDinas}
                         />
                     ) : ( 
                         <FormInput 

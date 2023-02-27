@@ -1,7 +1,7 @@
 export const TableContent = ({children, className, onClick = () => {}}) => (
     <td 
         onClick={() => onClick()}
-        className={`px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 bg-gray-100  ${className && className}`}
+        className={`px-6 py-4 text-sm font-bold text-gray-900 bg-gray-100  ${className && className}`}
     >
         {children}
     </td>
