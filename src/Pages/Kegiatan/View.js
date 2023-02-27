@@ -19,7 +19,7 @@ export const View = ({
         try {
             const response = await EditKegiatan(data?.id, payload);
             if (response.data) {
-                onCallback();
+                onCallback({success: true});
                 toast.success(`${status === '0' ? 'Berhasil rejected kegiatan' : 'Berhasil submit kegiatan' }`);
             } 
         } catch (error) {
@@ -37,7 +37,7 @@ export const View = ({
         try {
             const response = await ApproveKegiatan(dataBody);
             if (response.data) {
-                onCallback();
+                onCallback({success: true});
                 toast.success('Berhasil Approve kegiatan');
             } 
         } catch (error) {
@@ -50,6 +50,8 @@ export const View = ({
         return dataPegawai
     }
 
+    console.log(pegawai)
+
     const onSelect = (selectedPegawai,payload) => {
         const datasPegawai = []
 
@@ -57,7 +59,10 @@ export const View = ({
             let dataPegawai = {
                 nama: data.jabatan,
                 nama_pegawai: data.nama,
-                kegiatan_id: payload.id    
+                kegiatan_id: payload.id,
+                pangkat: data.pangkat,
+                gol: data.gol,
+                nip: data.nip
             }
             datasPegawai.push(dataPegawai)
         })
@@ -144,42 +149,41 @@ export const View = ({
                             <div>: <a href={data.upload} target="_blank" rel="noreferrer">File surat</a></div>
                         </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-4 gap-4 mt-4">
                             <div>Keperluan</div>
-                            <div>: { data.keperluan }</div>
-                            </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>Keterangan</div>
-                            <div>: { data.keterangan }</div>    
-                        </div>
+                            <div className="col-span-3">: { data.keperluan }</div>
                     </div>
-                    <div className="grid grid-cols-4 gap-4 mt-1">
+                    <div className="grid grid-cols-4 gap-4  mt-4">
+                            <div>Keterangan</div>
+                            <div className="col-span-3">: { data.keterangan }</div>    
+                    </div>
+                    <div className="grid grid-cols-4 gap-4 mt-2">
                         <div>Rekomendasi Peserta Jabatan</div>
                         <div className="col-span-3">: { data.lsjabatan.map( (jabatan) => { return jabatan.nama + ', ' }) }</div>
                     </div>
                     {
                         data.status === '2' ? (
-                            <div className="grid grid-cols-4 gap-4 mt-1">
+                            <div className="grid grid-cols-4 gap-4 mt-2">
+                                <div>peserta</div>
                                 <div className="col-span-3">
                                     <div className="grid grid-cols-3 gap-1">
                                         {
-                                            data.lsjabatan.map( jabatan => {
+                                            data.lsjabatan.map( (jabatan,i) => {
                                                 return (
                                                     <>
-                                                        <div>{ jabatan.nama }</div>
+                                                        <div key={i}>{ jabatan.nama }</div>
                                                         <div className="col-span-2">
                                                             <Multiselect
                                                                 className='input-base w-full'
-                                                                options={filterPegawai(`${jabatan.nama}`)}
-                                                                placeholder='Pilih Pegawai'
-                                                                name={jabatan.nama}
-                                                                // selectedValues={selectedValue}
-                                                                onSelect={ (e) => onSelect(e,data)}
-                                                                // onRemove={onRemove}
-                                                                displayValue="nama"
-                                                            />
-                                                        </div>
+                                                                    options={filterPegawai(`${jabatan.nama}`)}
+                                                                    placeholder='Pilih Pegawai'
+                                                                    name={jabatan.nama}
+                                                                    // selectedValues={selectedValue}
+                                                                    onSelect={ (e) => onSelect(e,data)}
+                                                                    // onRemove={onRemove}
+                                                                    displayValue="nama"
+                                                                />
+                                                            </div>
                                                     </>
                                                 )
                                             })
@@ -192,7 +196,7 @@ export const View = ({
                     <div className="mt-8 flex justify-end">
                         <div className="flex gap-2 items-center">
                             {
-                                data.status === '1' ? (
+                                data.status === '3' ? (
                                     <button
                                         type="button"
                                         className="inline-flex justify-center rounded-full border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
