@@ -23,6 +23,7 @@ export const Auth = () => {
             if (response.data.msg) {
                 dispatch(setUsername(response.data.result.username))
                 AppConfig.SetToken(response.data.result.session.acces_token);
+                AppConfig.SetUsername(response.data.result.username);
                 navigation('/');
             }
         } catch (error) {
