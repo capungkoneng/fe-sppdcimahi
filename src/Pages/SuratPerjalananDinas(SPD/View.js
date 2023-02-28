@@ -3,6 +3,8 @@ import moment from "moment";
 import Logo from 'Assets/icons/logo-kota-cimahi.png';
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css'
 
 
 export const View = ({
@@ -12,6 +14,48 @@ export const View = ({
 }) => {
 
     const [activeTab, setActiveTab] = useState([]);
+    const [pulang, setPulang] = useState(false);
+    const [viewPage2, setViewPage2] = useState(false);
+    const [dataColumn1, setDataColumn1] = useState({
+        berangkat: '',
+        ke: '',
+        tanggal: '',
+    });
+    const [dataColumn2, setDataColumn2] = useState({
+        tiba: '',
+        tanggalTiba: '',
+        berangkat: '',
+        ke: '',
+        tanggal: '',
+    });
+    const [dataColumn3, setDataColumn3] = useState({
+        tiba: '',
+        tanggalTiba: '',
+        kepala: '',
+        berangkat: '',
+        ke: '',
+        tanggal: '',
+    });
+    const [dataColumn4, setDataColumn4] = useState({
+        tiba: '',
+        tanggalTiba: '',
+        kepala: '',
+        berangkat: '',
+        ke: '',
+        tanggal: '',
+    });
+    const [dataColumn5, setDataColumn5] = useState({
+        tiba: '',
+        tanggalTiba: '',
+        kepala: '',
+        berangkat: '',
+        ke: '',
+        tanggal: '',
+    });
+    const [dataColumn6, setDataColumn6] = useState({
+        tiba: '',
+        tanggalTiba: '',
+    });
 
     useEffect(() => {
         if (data) {
@@ -19,7 +63,262 @@ export const View = ({
         }
     }, [data]);
 
+    const onChangeDataColumn1 = (value,key) => {
+        if(key === 'berangkat'){
+            setDataColumn1({
+                berangkat: value,
+                ke: dataColumn1.ke,
+                tanggal: dataColumn1.tanggal,
+            })
+        }else if(key === 'ke'){
+            setDataColumn1({
+                berangkat: dataColumn1.berangkat,
+                ke: value,
+                tanggal: dataColumn1.tanggal,
+            })
+        }else{
+            setDataColumn1({
+                berangkat: dataColumn1.berangkat,
+                ke: dataColumn1.ke,
+                tanggal: value,
+            })
+        }
+    }
+
+    const onChangeDataColumn2 = (value,key) => {
+        if(key === 'tiba'){
+            setDataColumn2({
+                tiba: value,
+                tanggalTiba: dataColumn2.tanggalTiba,
+                berangkat: dataColumn2.berangkat,
+                ke: dataColumn2.ke,
+                tanggal: dataColumn2.tanggal,
+            })
+        }else if(key === 'tanggalTiba'){
+            setDataColumn2({
+                tiba: dataColumn2.tiba,
+                tanggalTiba: value,
+                berangkat: dataColumn2.berangkat,
+                ke: dataColumn2.ke,
+                tanggal: dataColumn2.tanggal,
+            })
+        }else if(key === 'berangkat'){
+            setDataColumn2({
+                tiba: dataColumn2.tiba,
+                tanggalTiba: dataColumn2.tanggalTiba,
+                berangkat: value,
+                ke: dataColumn2.ke,
+                tanggal: dataColumn2.tanggal,
+            })
+        }else if(key === 'ke'){
+            setDataColumn2({
+                tiba: dataColumn2.tiba,
+                tanggalTiba: dataColumn2.tanggalTiba,
+                berangkat: dataColumn2.berangkat,
+                ke: value,
+                tanggal: dataColumn2.tanggal,
+            })
+        }else{
+            setDataColumn2({
+                tiba: dataColumn2.tiba,
+                tanggalTiba: dataColumn2.tanggalTiba,
+                berangkat: dataColumn2.berangkat,
+                ke: dataColumn2.ke,
+                tanggal: value,
+            })
+        }
+    }
+
+    const onChangeDataColumn3 = (value,key) => {
+        if(key === 'tiba'){
+            setDataColumn3({
+                tiba: value,
+                tanggalTiba: dataColumn3.tanggalTiba,
+                kepala: dataColumn3.kepala,
+                berangkat: dataColumn3.berangkat,
+                ke: dataColumn3.ke,
+                tanggal: dataColumn3.tanggal,
+            })
+        }else if(key === 'tanggalTiba'){
+            setDataColumn3({
+                tiba: dataColumn3.tiba,
+                tanggalTiba: value,
+                kepala: dataColumn3.kepala,
+                berangkat: dataColumn3.berangkat,
+                ke: dataColumn3.ke,
+                tanggal: dataColumn3.tanggal,
+            })
+        }else if(key === 'kepala'){
+            setDataColumn3({
+                tiba: dataColumn3.tiba,
+                tanggalTiba: dataColumn3.tanggalTiba,
+                kepala: value,
+                berangkat: dataColumn3.berangkat,
+                ke: dataColumn3.ke,
+                tanggal: dataColumn3.tanggal,
+            })
+        }else if(key === 'berangkat'){
+            setDataColumn3({
+                tiba: dataColumn3.tiba,
+                tanggalTiba: dataColumn3.tanggalTiba,
+                kepala: dataColumn3.kepala,
+                berangkat: value,
+                ke: dataColumn3.ke,
+                tanggal: dataColumn3.tanggal,
+            })
+        }else if(key === 'ke'){
+            setDataColumn3({
+                tiba: dataColumn3.tiba,
+                tanggalTiba: dataColumn3.tanggalTiba,
+                kepala: dataColumn3.kepala,
+                berangkat: dataColumn3.berangkat,
+                ke: value,
+                tanggal: dataColumn3.tanggal,
+            })
+        }else{
+            setDataColumn3({
+                tiba: dataColumn3.tiba,
+                tanggalTiba: dataColumn3.tanggalTiba,
+                kepala: dataColumn3.kepala,
+                berangkat: dataColumn3.berangkat,
+                ke: dataColumn3.ke,
+                tanggal: value,
+            })
+        }
+    }
+
+    const onChangeDataColumn4 = (value,key) => {
+        if(key === 'tiba'){
+            setDataColumn4({
+                tiba: value,
+                tanggalTiba: dataColumn4.tanggalTiba,
+                kepala: dataColumn4.kepala,
+                berangkat: dataColumn4.berangkat,
+                ke: dataColumn4.ke,
+                tanggal: dataColumn4.tanggal,
+            })
+        }else if(key === 'tanggalTiba'){
+            setDataColumn4({
+                tiba: dataColumn4.tiba,
+                tanggalTiba: value,
+                kepala: dataColumn4.kepala,
+                berangkat: dataColumn4.berangkat,
+                ke: dataColumn4.ke,
+                tanggal: dataColumn4.tanggal,
+            })
+        }else if(key === 'kepala'){
+            setDataColumn4({
+                tiba: dataColumn4.tiba,
+                tanggalTiba: dataColumn4.tanggalTiba,
+                kepala: value,
+                berangkat: dataColumn4.berangkat,
+                ke: dataColumn4.ke,
+                tanggal: dataColumn4.tanggal,
+            })
+        }else if(key === 'berangkat'){
+            setDataColumn4({
+                tiba: dataColumn4.tiba,
+                tanggalTiba: dataColumn4.tanggalTiba,
+                kepala: dataColumn4.kepala,
+                berangkat: value,
+                ke: dataColumn4.ke,
+                tanggal: dataColumn4.tanggal,
+            })
+        }else if(key === 'ke'){
+            setDataColumn4({
+                tiba: dataColumn4.tiba,
+                tanggalTiba: dataColumn4.tanggalTiba,
+                kepala: dataColumn4.kepala,
+                berangkat: dataColumn4.berangkat,
+                ke: value,
+                tanggal: dataColumn4.tanggal,
+            })
+        }else{
+            setDataColumn4({
+                tiba: dataColumn4.tiba,
+                tanggalTiba: dataColumn4.tanggalTiba,
+                kepala: dataColumn4.kepala,
+                berangkat: dataColumn4.berangkat,
+                ke: dataColumn4.ke,
+                tanggal: value,
+            })
+        }
+    }
+
+    const onChangeDataColumn5 = (value,key) => {
+        if(key === 'tiba'){
+            setDataColumn5({
+                tiba: value,
+                tanggalTiba: dataColumn5.tanggalTiba,
+                kepala: dataColumn5.kepala,
+                berangkat: dataColumn5.berangkat,
+                ke: dataColumn5.ke,
+                tanggal: dataColumn5.tanggal,
+            })
+        }else if(key === 'tanggalTiba'){
+            setDataColumn5({
+                tiba: dataColumn5.tiba,
+                tanggalTiba: value,
+                kepala: dataColumn5.kepala,
+                berangkat: dataColumn5.berangkat,
+                ke: dataColumn5.ke,
+                tanggal: dataColumn5.tanggal,
+            })
+        }else if(key === 'kepala'){
+            setDataColumn5({
+                tiba: dataColumn5.tiba,
+                tanggalTiba: dataColumn5.tanggalTiba,
+                kepala: value,
+                berangkat: dataColumn5.berangkat,
+                ke: dataColumn5.ke,
+                tanggal: dataColumn5.tanggal,
+            })
+        }else if(key === 'berangkat'){
+            setDataColumn5({
+                tiba: dataColumn5.tiba,
+                tanggalTiba: dataColumn5.tanggalTiba,
+                kepala: dataColumn5.kepala,
+                berangkat: value,
+                ke: dataColumn5.ke,
+                tanggal: dataColumn5.tanggal,
+            })
+        }else if(key === 'ke'){
+            setDataColumn5({
+                tiba: dataColumn5.tiba,
+                tanggalTiba: dataColumn5.tanggalTiba,
+                kepala: dataColumn5.kepala,
+                berangkat: dataColumn5.berangkat,
+                ke: value,
+                tanggal: dataColumn5.tanggal,
+            })
+        }else{
+            setDataColumn5({
+                tiba: dataColumn5.tiba,
+                tanggalTiba: dataColumn5.tanggalTiba,
+                kepala: dataColumn5.kepala,
+                berangkat: dataColumn5.berangkat,
+                ke: dataColumn5.ke,
+                tanggal: value,
+            })
+        }
+    }
+
+    const onChangeDataColumn6 = (value,key) => {
+        if(key === 'tiba'){
+            setDataColumn6({
+                tiba: value,
+                tanggalTiba: dataColumn5.tanggalTiba,
+            })
+        }else{
+            setDataColumn6({
+                tiba: dataColumn5.tiba,
+                tanggalTiba: value,
+            })
+        }
+    }
+
     const printDocument = () => {
+        setViewPage2(true)
         const doc = document.getElementById("divToPrint");
         const doc2 = document.getElementById("divToPrint2");
         const namePDF = activeTab.nama_pegawai
@@ -32,14 +331,65 @@ export const View = ({
                     unit: "cm",
                     format: [21, 33]  
                 });
-                pdf.addImage(imgData, "JPEG", 0, 0);
-                pdf.addPage()
-                pdf.addImage(imgData2, "JPEG", 0, 0);
-                // window.open(pdf.output('bloburl'), '_blank');
-                pdf.save(`SPD_${namePDF}.pdf`);
+                if(pulang){
+                    pdf.addImage(imgData2, "JPEG", 0, 0);
+                    // window.open(pdf.output('bloburl'), '_blank');
+                    pdf.save(`SPD_${namePDF}.pdf`);
+                }else{
+                    pdf.addImage(imgData, "JPEG", 0, 0);
+                    pdf.addPage()
+                    pdf.addImage(imgData2, "JPEG", 0, 0);
+                    // window.open(pdf.output('bloburl'), '_blank');
+                    pdf.save(`SPD_${namePDF}.pdf`);
+                }
+                setViewPage2(false)
             });
         });
     };
+
+    const Tiba = () => {
+        setPulang(!pulang)
+        setDataColumn1({
+            berangkat: '',
+            ke: '',
+            tanggal: '',
+        })
+        setDataColumn2({
+            tiba: '',
+            tanggalTiba: '',
+            berangkat: '',
+            ke: '',
+            tanggal: '',
+        })
+        setDataColumn3({
+            tiba: '',
+            tanggalTiba: '',
+            kepala: '',
+            berangkat: '',
+            ke: '',
+            tanggal: '',
+        })
+        setDataColumn4({
+            tiba: '',
+            tanggalTiba: '',
+            kepala: '',
+            berangkat: '',
+            ke: '',
+            tanggal: '',
+        })
+        setDataColumn5({
+            tiba: '',
+            tanggalTiba: '',
+            kepala: '',
+            berangkat: '',
+            ke: '',
+            tanggal: '',
+        })
+        setDataColumn6({
+            tiba: '',
+            tanggalTiba: '',
+        })
+    }
 
     const days = (berangkat,selesai) => {
         var TglBerangkat = moment(berangkat);
@@ -67,7 +417,7 @@ export const View = ({
                 }
 
             </div>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-8 flex justify-start">
                 <div className="flex gap-2 items-center">
                     <button
                         type="button"
@@ -78,12 +428,23 @@ export const View = ({
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
-                        </svg> PDF
+                        </svg> Export PDF
+                    </button>
+                    <button
+                        type="button"
+                        className="inline-flex justify-center rounded-full border border-transparent bg-[#3F7459] px-4 py-2 text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                        onClick={() => {
+                            Tiba()
+                        }}
+                    >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"></path>
+                    </svg> { pulang ? 'Belum tiba' : 'Sudah tiba' }
                     </button>
                 </div>
             </div>
-            <p id="as" className="text-sm">Hello</p>
-            <div className="w-3/4 border mt-6 mx-32">
+            <div className={`w-3/4 border mt-6 mx-32 ${ pulang ? 'hidden' : '' }`}>
                 <div className="pl-8 pr-16 pt-6 text-black" id="divToPrint">
                     <div>
                         <div className="relative inline">
@@ -259,79 +620,528 @@ export const View = ({
                             <tbody>
                                 <tr>
                                     <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
-                                        <p>I.</p>
+                                        <p></p>
                                     </td>
                                     <td className="w-1/2 border border-black px-2 pb-2">
-                                        <p>Berangkat dari :</p>
-                                        <p>Ke :</p>
-                                        <p>Pada Tanggal :</p>
-                                        <p>Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
-                                        <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
-                                        <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
-                                        <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Berangkat dari :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn1.berangkat} onChange={ (e) => onChangeDataColumn1(e.target.value,'berangkat')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Ke :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn1.ke} onChange={ (e) => onChangeDataColumn1(e.target.value,'ke')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Pada Tanggal :</div>
+                                                        <div className="col-span-3">
+                                                            <DatePicker
+                                                                selected={ dataColumn1.tanggal === '' ? new Date() : new Date(dataColumn1.tanggal)}
+                                                                onChange={ (e) => onChangeDataColumn1(e,'tanggal') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <p></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>Berangkat dari : {dataColumn1.berangkat}</p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {dataColumn1.ke}</p>
+                                                    <p>Pada Tanggal &nbsp;: { dataColumn1.tanggal === '' ? '' : moment(dataColumn1.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p>Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
+                                                    <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
+                                                    <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
+                                                    <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>Berangkat dari : </p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </p>
+                                                    <p>Pada Tanggal &nbsp;: </p>
+                                                    <p></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
-                                        <p>II. Tiba di :</p>
-                                        <p className="ml-4">Pada Tanggal :</p>
-                                        <p className="text-center">Kepala Bidang Perikanan Tangkap Dinas Kelautan dan Perikanan Prov. Jabar</p>
-                                        <p className="mt-20 text-center">{ pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nama : '' }</p>
-                                        <p className="text-center">NIP. { pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nip : '' }</p>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-3">
+                                                        <div>II. Tiba di :</div>
+                                                        <div className="col-span-2">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn2.tiba} onChange={ (e) => onChangeDataColumn2(e.target.value,'tiba')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3">
+                                                        <div className="ml-4">Pada Tanggal :</div>
+                                                        <div className="col-span-2">
+                                                            <DatePicker
+                                                                selected={ dataColumn2.tanggalTiba === '' ? new Date() : new Date(dataColumn2.tanggalTiba)}
+                                                                onChange={ (e) => onChangeDataColumn2(e,'tanggalTiba') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>II. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn2.tiba }</p>
+                                                    <p className="ml-4">Pada Tanggal : { dataColumn2.tanggalTiba === '' ? '' : moment(dataColumn2.tanggalTiba).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-center">Kepala Bidang Perikanan Tangkap Dinas Kelautan dan Perikanan Prov. Jabar</p>
+                                                    <p className="mt-20 text-center">{ pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nama : '' }</p>
+                                                    <p className="text-center">NIP. { pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nip : '' }</p>                                                
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>II. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                                                    <p className="ml-4">Pada Tanggal :</p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                     <td className="w-1/2 border border-black px-2 pb-2">
-                                        <p>Berangkat dari :</p>
-                                        <p>Ke :</p>
-                                        <p>Pada Tanggal :</p>
-                                        <p className="text-center">Kepala Bidang Perikanan Tangkap Dinas Kelautan dan Perikanan Prov. Jabar</p>
-                                        <p className="mt-20 text-center">{ pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nama : '' }</p>
-                                        <p className="text-center">NIP. { pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nip : '' }</p>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Berangkat dari :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn2.berangkat} onChange={ (e) => onChangeDataColumn2(e.target.value,'berangkat')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Ke :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn2.ke} onChange={ (e) => onChangeDataColumn2(e.target.value,'ke')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Pada Tanggal :</div>
+                                                        <div className="col-span-3">
+                                                            <DatePicker
+                                                                selected={ dataColumn2.tanggal === '' ? new Date() : new Date(dataColumn2.tanggal)}
+                                                                onChange={ (e) => onChangeDataColumn2(e,'tanggal') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <p></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>Berangkat dari : { dataColumn2.berangkat }</p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn2.ke }</p>
+                                                    <p>Pada Tanggal &nbsp;&nbsp;: { dataColumn2.tanggal === '' ? '' : moment(dataColumn2.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-center">Kepala Bidang Perikanan Tangkap Dinas Kelautan dan Perikanan Prov. Jabar</p>
+                                                    <p className="mt-20 text-center">{ pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nama : '' }</p>
+                                                    <p className="text-center">NIP. { pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nip : '' }</p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>Berangkat dari :</p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                                                    <p>Pada Tanggal &nbsp;&nbsp;:</p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
-                                        <p>III. Tiba di :</p>
-                                        <p className="ml-4">Pada Tanggal :</p>
-                                        <p className="ml-4 mb-16">Kepala :</p>
+                                    {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-3">
+                                                        <div>III. Tiba di :</div>
+                                                        <div className="col-span-2">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn3.tiba} onChange={ (e) => onChangeDataColumn3(e.target.value,'tiba')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3">
+                                                        <div className="ml-4">Pada Tanggal :</div>
+                                                        <div className="col-span-2">
+                                                            <DatePicker
+                                                                selected={ dataColumn3.tanggalTiba === '' ? new Date() : new Date(dataColumn3.tanggalTiba)}
+                                                                onChange={ (e) => onChangeDataColumn3(e,'tanggalTiba') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3">
+                                                        <div className="ml-4">Kepala :</div>
+                                                        <div className="col-span-2">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn3.kepala} onChange={ (e) => onChangeDataColumn3(e.target.value,'kepala')}/>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>III. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn3.tiba }</p>
+                                                    <p className="ml-4">Pada Tanggal : { dataColumn3.tanggalTiba === '' ? '' : moment(dataColumn3.tanggalTiba).format('DD MMMM YYYY') }</p>
+                                                    <p className="ml-4">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn3.kepala }</p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>                                                
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>III. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                                                    <p className="ml-4">Pada Tanggal :</p>
+                                                    <p className="ml-4">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                     <td className="w-1/2 border border-black px-2 pb-2">
-                                        <p>Berangkat dari :</p>
-                                        <p>Ke :</p>
-                                        <p className="mb-16">Pada Tanggal :</p>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Berangkat dari :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn3.berangkat} onChange={ (e) => onChangeDataColumn3(e.target.value,'berangkat')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Ke :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn3.ke} onChange={ (e) => onChangeDataColumn3(e.target.value,'ke')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Pada Tanggal :</div>
+                                                        <div className="col-span-3">
+                                                            <DatePicker
+                                                                selected={ dataColumn3.tanggal === '' ? new Date() : new Date(dataColumn3.tanggal)}
+                                                                onChange={ (e) => onChangeDataColumn3(e,'tanggal') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <p></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>Berangkat dari : { dataColumn3.berangkat }</p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn3.ke }</p>
+                                                    <p>Pada Tanggal &nbsp;&nbsp;: { dataColumn3.tanggal === '' ? '' : moment(dataColumn3.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>Berangkat dari :</p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                                                    <p>Pada Tanggal &nbsp;&nbsp;:</p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
-                                        <p>IV. Tiba di :</p>
-                                        <p className="ml-4">Pada Tanggal :</p>
-                                        <p className="ml-4 mb-16">Kepala :</p>
+                                    {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-3">
+                                                        <div>IV. Tiba di :</div>
+                                                        <div className="col-span-2">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn4.tiba} onChange={ (e) => onChangeDataColumn4(e.target.value,'tiba')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3">
+                                                        <div className="ml-4">Pada Tanggal :</div>
+                                                        <div className="col-span-2">
+                                                            <DatePicker
+                                                                selected={ dataColumn4.tanggalTiba === '' ? new Date() : new Date(dataColumn4.tanggalTiba)}
+                                                                onChange={ (e) => onChangeDataColumn4(e,'tanggalTiba') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3">
+                                                        <div className="ml-4">Kepala :</div>
+                                                        <div className="col-span-2">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn4.kepala} onChange={ (e) => onChangeDataColumn4(e.target.value,'kepala')}/>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>IV. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn4.tiba }</p>
+                                                    <p className="ml-4">Pada Tanggal : { dataColumn4.tanggalTiba === '' ? '' : moment(dataColumn4.tanggalTiba).format('DD MMMM YYYY') }</p>
+                                                    <p className="ml-4">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn4.kepala }</p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>                                                
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>IV. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                                                    <p className="ml-4">Pada Tanggal :</p>
+                                                    <p className="ml-4">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                     <td className="w-1/2 border border-black px-2 pb-2">
-                                        <p>Berangkat dari :</p>
-                                        <p>Ke :</p>
-                                        <p className="mb-16">Pada Tanggal :</p>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Berangkat dari :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn4.berangkat} onChange={ (e) => onChangeDataColumn4(e.target.value,'berangkat')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Ke :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn4.ke} onChange={ (e) => onChangeDataColumn4(e.target.value,'ke')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Pada Tanggal :</div>
+                                                        <div className="col-span-3">
+                                                            <DatePicker
+                                                                selected={ dataColumn4.tanggal === '' ? new Date() : new Date(dataColumn4.tanggal)}
+                                                                onChange={ (e) => onChangeDataColumn4(e,'tanggal') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <p></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>Berangkat dari : { dataColumn4.berangkat }</p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn4.ke }</p>
+                                                    <p>Pada Tanggal &nbsp;&nbsp;: { dataColumn4.tanggal === '' ? '' : moment(dataColumn4.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>Berangkat dari :</p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                                                    <p>Pada Tanggal &nbsp;&nbsp;:</p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
-                                        <p>V. Tiba di :</p>
-                                        <p className="ml-4">Pada Tanggal :</p>
-                                        <p className="ml-4 mb-16">Kepala :</p>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-3">
+                                                        <div>V. Tiba di :</div>
+                                                        <div className="col-span-2">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn5.tiba} onChange={ (e) => onChangeDataColumn5(e.target.value,'tiba')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3">
+                                                        <div className="ml-4">Pada Tanggal :</div>
+                                                        <div className="col-span-2">
+                                                            <DatePicker
+                                                                selected={ dataColumn4.tanggalTiba === '' ? new Date() : new Date(dataColumn5.tanggalTiba)}
+                                                                onChange={ (e) => onChangeDataColumn5(e,'tanggalTiba') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3">
+                                                        <div className="ml-4">Kepala :</div>
+                                                        <div className="col-span-2">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn5.kepala} onChange={ (e) => onChangeDataColumn5(e.target.value,'kepala')}/>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>V. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn5.tiba }</p>
+                                                    <p className="ml-4">Pada Tanggal : { dataColumn5.tanggalTiba === '' ? '' : moment(dataColumn5.tanggalTiba).format('DD MMMM YYYY') }</p>
+                                                    <p className="ml-4">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn5.kepala }</p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>                                                
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>V. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                                                    <p className="ml-4">Pada Tanggal :</p>
+                                                    <p className="ml-4">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                     <td className="w-1/2 border border-black px-2 pb-2">
-                                        <p>Berangkat dari :</p>
-                                        <p>Ke :</p>
-                                        <p className="mb-16">Pada Tanggal :</p>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Berangkat dari :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn5.berangkat} onChange={ (e) => onChangeDataColumn5(e.target.value,'berangkat')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Ke :</div>
+                                                        <div className="col-span-3">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn5.ke} onChange={ (e) => onChangeDataColumn5(e.target.value,'ke')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4">
+                                                        <div>Pada Tanggal :</div>
+                                                        <div className="col-span-3">
+                                                            <DatePicker
+                                                                selected={ dataColumn5.tanggal === '' ? new Date() : new Date(dataColumn5.tanggal)}
+                                                                onChange={ (e) => onChangeDataColumn5(e,'tanggal') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <p></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>Berangkat dari : { dataColumn5.berangkat }</p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn5.ke }</p>
+                                                    <p>Pada Tanggal &nbsp;&nbsp;: { dataColumn5.tanggal === '' ? '' : moment(dataColumn5.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>Berangkat dari :</p>
+                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                                                    <p>Pada Tanggal &nbsp;&nbsp;:</p>
+                                                    <p className="text-center"></p>
+                                                    <p className="mt-20 text-center"></p>
+                                                    <p className="text-center"></p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
-                                        <p>VI. Tiba di :</p>
-                                        <p className="ml-4">Pada Tanggal :</p>
-                                        <p className="text-center">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
-                                        <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
-                                        <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
-                                        <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <div className="grid grid-cols-3">
+                                                        <div>VI. Tiba di :</div>
+                                                        <div className="col-span-2">
+                                                            <input className="border-b border-blue-800 outline-none w-full" type='text' value={dataColumn6.tiba} onChange={ (e) => onChangeDataColumn6(e.target.value,'tiba')}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3">
+                                                        <div className="ml-4">Pada Tanggal :</div>
+                                                        <div className="col-span-2">
+                                                            <DatePicker
+                                                                selected={ dataColumn6.tanggalTiba === '' ? new Date() : new Date(dataColumn6.tanggalTiba)}
+                                                                onChange={ (e) => onChangeDataColumn6(e,'tanggalTiba') }
+                                                                className="border-b border-blue-800 outline-none w-full"
+                                                                dateFormat="dd MMMM yyyy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-center">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
+                                                    <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
+                                                    <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
+                                                    <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p>VI. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn6.tiba }</p>
+                                                    <p className="ml-4">Pada Tanggal : { dataColumn6.tanggalTiba === '' ? '' : moment(dataColumn6.tanggalTiba).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-center">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
+                                                    <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
+                                                    <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
+                                                    <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>VI. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                                                    <p className="ml-4">Pada Tanggal :</p>
+                                                    <p className="text-center">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
+                                                    <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
+                                                    <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
+                                                    <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                     <td className="w-1/2 border border-black px-2 pb-2">
                                         <p className="text-justify">Telah diperiksa dengan keterangan bahwa perjalanan tersebut atas perintahnya dan semata-mata untuk kepentingan jabatan dalama waktu yang sesingkat-singkatanya.</p>
@@ -352,7 +1162,7 @@ export const View = ({
                                         <div className="ml-8 text-justify">
                                             <ol className="list-decimal">
                                                 <li>Pada lembar I, penandatanganan oleh PenggunaAnggaran / Kuasa Pengguna Anggaran, dilaksanakan bersamaan dengan tanggal dikeluarkannya Surat Perintah (SP)</li>
-                                                <li>PA/KPA yang menerbitkan SPPD, pegawai yang melakukan perjalanan dinas, para pejabat yang mengesahkan tanggal berangkat / tiba, serta bendahara pengeluaran bertanggung jawab berdasarkan perarturan-perarturan Keuangan Negara apabila Negara menderita kerugian akibat.</li>
+                                                <li>PA/KPA yang menerbitkan SPPD, pegawai yang melakukan perjalanan dinas, para pejabat yang mengesahkan tanggal berangkat / tiba, serta bendahara pengeluaran bertanggung jawab berdasarkan perarturan-perarturan Keuangan Negara apabila Negara menderita kerugian akibat kesalahan, kelalaian, dan kealpaannya.</li>
                                             </ol>
                                         </div>
                                     </td>
