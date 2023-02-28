@@ -184,7 +184,7 @@ export const Spd = () => {
                             <tr key={index}>
                                 <TableContent className={`${index === value.length - 1 ? 'rounded-bl-lg' : '' }`}>{ result.no_spd }</TableContent>
                                 <TableContent>{ result.no_spt }</TableContent>
-                                <TableContent>{ result.spt.kegiatan.keperluan }</TableContent>
+                                <TableContent className="w-[30%] text-justify">{ result.spt.kegiatan.keperluan }</TableContent>
                                 <TableContent>{ moment(result.spt.kegiatan.tgl_berangkat).format('DD-MMM-YYYY') }</TableContent>
                                 <TableContent>{ moment(result.spt.kegiatan.tgl_mulai).format('DD-MMM-YYYY') }</TableContent>
                                 <TableContent>{ moment(result.spt.kegiatan.tgl_selesai).format('DD-MMM-YYYY') }</TableContent>
