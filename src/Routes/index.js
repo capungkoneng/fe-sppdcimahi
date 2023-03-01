@@ -1,6 +1,6 @@
 import { Layout } from "Components";
-import { Auth, Dashboard, Harian, Kegiatan, Pegawai, Penginapan, RapatLuarKantor, Representasi, SewaKendaraan, Spt, Spd, Pjsppd, Kwitansi, Np2d, Sp2d  } from "Pages";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Auth, Dashboard, Harian, Kegiatan, Pegawai, Penginapan, RapatLuarKantor, Representasi, SewaKendaraan, Spt, Spd, Pjsppd, Kwitansi, Np2d, Sp2d, Jabatan, Pangkat, Bidang, Golongan, Berkendara } from "Pages";
+import { BrowserRouter, Route, Routes,  } from "react-router-dom";
 import { ProtectRoute } from "./ProtectRoute";
 
 export const RootRoute = () => {
@@ -22,6 +22,12 @@ export const RootRoute = () => {
                     <Route path="/pemkot-cimahi/kpd/kwitansi" element={<ProtectRoute><Kwitansi /></ProtectRoute>} />
                     <Route path="/pemkot-cimahi/kpd/np2d" element={<ProtectRoute><Np2d /></ProtectRoute>} />
                     <Route path="/pemkot-cimahi/kpd/sp2d" element={<ProtectRoute><Sp2d /></ProtectRoute>} />
+                    {/* Pengaturan */}
+                    <Route path="/pemkot-cimahi/pengaturan/jabatan" element={<ProtectRoute><Jabatan /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/pangkat" element={<ProtectRoute><Pangkat /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/Bidang" element={<ProtectRoute><Bidang /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/Golongan" element={<ProtectRoute><Golongan /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/Berkendara" element={<ProtectRoute><Berkendara /></ProtectRoute>} />
                 </Route>
                 <Route path="/login" element={<Auth />} />
             </Routes>
