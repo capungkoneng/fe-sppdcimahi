@@ -176,6 +176,31 @@ export const ListNav = [
                 title: 'Pengaturan Login & Hak',
                 path: '/pemkot-cimahi/pengaturan/login-dan-hak'
             },
+            {
+                id: 'jabatan',
+                title: 'Jabatan',
+                path: '/pemkot-cimahi/pengaturan/jabatan'
+            },
+            {
+                id: 'pangkat',
+                title: 'Pangkat',
+                path: '/pemkot-cimahi/pengaturan/pangkat'
+            },
+            {
+                id: 'bidang',
+                title: 'Bidang',
+                path: '/pemkot-cimahi/pengaturan/bidang'
+            },
+            {
+                id: 'golongan',
+                title: 'Golongan',
+                path: '/pemkot-cimahi/pengaturan/golongan'
+            },
+            {
+                id: 'berkendara',
+                title: 'Berkendara',
+                path: '/pemkot-cimahi/pengaturan/berkendara'
+            },
         ]
     },
     

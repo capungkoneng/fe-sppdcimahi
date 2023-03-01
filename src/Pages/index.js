@@ -6,4 +6,5 @@ export * from "./Kegiatan";
 export * from "./SuratPerintahTugas(SPT)";
 export * from "./SuratPerjalananDinas(SPD";
 export * from "./PertanggungJawabanSPPD";
-export * from "./KeuanganPerjalananDinas"
+export * from "./KeuanganPerjalananDinas";
+export * from "./Pengaturan";
