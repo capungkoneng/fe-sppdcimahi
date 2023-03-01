@@ -1,7 +1,27 @@
-import { Card } from './components/Card'
-import { DataOverview } from './data'
+import { useEffect, useState } from "react";
+import { Card } from './components/Card';
+import { DataOverview } from './data';
+import { GetAllPegawai } from "Services/Pegawai";
 
 export const Dashboard = () => {
+
+    const [totalPegawai, setTotalPegawai] = useState(0);
+
+    useEffect(() => {
+        fetchAllPegawai();
+    }, []);
+
+    const fetchAllPegawai = async () => {
+        try {
+            const response = await GetAllPegawai({page: 1, perpage: 10});
+            if (response.data.result) {
+                setTotalPegawai(response.data.totalData)
+            }
+        } catch (error) {
+            console.log(error);
+            setTotalPegawai(0)
+        }
+    };
 
     return (
         <main>
@@ -15,7 +35,7 @@ export const Dashboard = () => {
                 <div className="flex items-center mt-8 gap-5 lg:flex-row flex-col">
                     {
                         DataOverview.map(value => {
-                            return <Card key={value.name} title={value.name} total={value.value} icon={value.icons}/>
+                            return <Card key={value.name} title={value.name} total={value.name === 'Jumlah Pegawai' ? totalPegawai : 0} icon={value.icons}/>
                         })
                     }
                 </div>

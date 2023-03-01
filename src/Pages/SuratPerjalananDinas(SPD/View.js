@@ -574,6 +574,15 @@ export const View = ({
                                         <p className="m-0">b.</p>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td className="w-[5%] text-center border border-black pb-2">10.</td>
+                                    <td className="w-[35%] border border-black px-2 pb-2">
+                                        <p className="m-0">keterangan lain-lain</p>
+                                    </td>
+                                    <td className="w-[60%] border border-black px-2 pb-2">
+                                        <p className="m-0"></p>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -601,7 +610,7 @@ export const View = ({
                         </div>
                     </div>
                     <div>
-                        <div className="grid grid-cols-7 gap-4 mt-24 mb-8 text-sm">
+                        <div className="grid grid-cols-7 gap-4 mt-20 mb-8 text-sm">
                             <div className="col-span-4"></div>
                             <div className="col-span-3 text-center">
                                 <p>{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>

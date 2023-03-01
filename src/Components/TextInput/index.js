@@ -72,7 +72,7 @@ export const InputFile = ({
             <p 
                 class="mt-1 text-sm text-black-400" id="file_input_help"
             >
-                SVG, PNG, JPG or PDF.
+                SVG, PNG, JPG or PDF. Max File (5mb)
             </p>
         </div>
     )
