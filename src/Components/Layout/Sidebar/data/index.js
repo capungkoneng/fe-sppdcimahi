@@ -151,7 +151,7 @@ export const ListNav = [
         )
     },
     {
-        id: 'Pengaturan',
+        id: 'pengaturan',
         title: 'Pengaturan',
         link: '/pemkot-cimahi/pengaturan',
         icon: (
@@ -200,6 +200,21 @@ export const ListNav = [
                 id: 'berkendara',
                 title: 'Berkendara',
                 path: '/pemkot-cimahi/pengaturan/berkendara'
+            },
+            {
+                id: 'urusan',
+                title: 'Urusan',
+                path: '/pemkot-cimahi/pengaturan/urusan'
+            },
+            {
+                id: 'unit',
+                title: 'Unit',
+                path: '/pemkot-cimahi/pengaturan/unit'
+            },
+            {
+                id: 'subunit',
+                title: 'Sub Unit',
+                path: '/pemkot-cimahi/pengaturan/subunit'
             },
         ]
     },

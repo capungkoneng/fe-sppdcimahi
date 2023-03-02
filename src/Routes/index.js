@@ -1,5 +1,5 @@
 import { Layout } from "Components";
-import { Auth, Dashboard, Harian, Kegiatan, Pegawai, Penginapan, RapatLuarKantor, Representasi, SewaKendaraan, Spt, Spd, Pjsppd, Kwitansi, Np2d, Sp2d, Jabatan, Pangkat, Bidang, Golongan, Berkendara } from "Pages";
+import { Auth, Dashboard, Harian, Kegiatan, Pegawai, Penginapan, RapatLuarKantor, Representasi, SewaKendaraan, Spt, Spd, Pjsppd, Kwitansi, Np2d, Sp2d, Jabatan, Pangkat, Bidang, Golongan, Berkendara, Urusan, Unit, SubUnit } from "Pages";
 import { BrowserRouter, Route, Routes,  } from "react-router-dom";
 import { ProtectRoute } from "./ProtectRoute";
 
@@ -28,6 +28,9 @@ export const RootRoute = () => {
                     <Route path="/pemkot-cimahi/pengaturan/Bidang" element={<ProtectRoute><Bidang /></ProtectRoute>} />
                     <Route path="/pemkot-cimahi/pengaturan/Golongan" element={<ProtectRoute><Golongan /></ProtectRoute>} />
                     <Route path="/pemkot-cimahi/pengaturan/Berkendara" element={<ProtectRoute><Berkendara /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/Urusan" element={<ProtectRoute><Urusan /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/Unit" element={<ProtectRoute><Unit /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/SubUnit" element={<ProtectRoute><SubUnit /></ProtectRoute>} />
                 </Route>
                 <Route path="/login" element={<Auth />} />
             </Routes>
