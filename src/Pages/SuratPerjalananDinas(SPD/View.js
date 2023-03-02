@@ -333,8 +333,8 @@ export const View = ({
                 });
                 if(pulang){
                     pdf.addImage(imgData2, "JPEG", 0, 0);
-                    // window.open(pdf.output('bloburl'), '_blank');
-                    pdf.save(`SPD_${namePDF}.pdf`);
+                    window.open(pdf.output('bloburl'), '_blank');
+                    // pdf.save(`SPD_${namePDF}.pdf`);
                 }else{
                     pdf.addImage(imgData, "JPEG", 0, 0);
                     pdf.addPage()
@@ -625,13 +625,13 @@ export const View = ({
             <div className="w-3/4 border mt-6 mx-32">
                 <div className="pl-8 pr-16 pt-6 pb-4 text-black" id="divToPrint2">
                     <div className="mt-2">
-                        <table className="table-fixed border border-black w-full text-xs">
+                        <table className={`table-fixed ${ pulang && viewPage2 ? '' : 'border border-black' } w-full text-xs`}>
                             <tbody>
                                 <tr>
-                                    <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2 align-text-top`}>
                                         <p></p>
                                     </td>
-                                    <td className="w-1/2 border border-black px-2 pb-2">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2`}>
                                         {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -665,9 +665,9 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>Berangkat dari : {dataColumn1.berangkat}</p>
-                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {dataColumn1.ke}</p>
-                                                    <p>Pada Tanggal &nbsp;: { dataColumn1.tanggal === '' ? '' : moment(dataColumn1.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-white">Berangkat dari : <span className="text-black">{dataColumn1.berangkat}</span></p>
+                                                    <p className="text-white">Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{dataColumn1.ke}</span></p>
+                                                    <p className="text-white">Pada Tanggal &nbsp;: <span className="text-black">{ dataColumn1.tanggal === '' ? '' : moment(dataColumn1.tanggal).format('DD MMMM YYYY') }</span></p>
                                                     <p>Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
                                                     <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
                                                     <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
@@ -688,7 +688,7 @@ export const View = ({
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2 align-text-top`}>
                                         {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -715,8 +715,8 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>II. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn2.tiba }</p>
-                                                    <p className="ml-4">Pada Tanggal : { dataColumn2.tanggalTiba === '' ? '' : moment(dataColumn2.tanggalTiba).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-white">II. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn2.tiba }</span></p>
+                                                    <p className="ml-4 text-white">Pada Tanggal : <span className="text-black">{ dataColumn2.tanggalTiba === '' ? '' : moment(dataColumn2.tanggalTiba).format('DD MMMM YYYY') }</span></p>
                                                     <p className="text-center">Kepala Bidang Perikanan Tangkap Dinas Kelautan dan Perikanan Prov. Jabar</p>
                                                     <p className="mt-20 text-center">{ pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nama : '' }</p>
                                                     <p className="text-center">NIP. { pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nip : '' }</p>                                                
@@ -732,7 +732,7 @@ export const View = ({
                                             )
                                         }
                                     </td>
-                                    <td className="w-1/2 border border-black px-2 pb-2">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2`}>
                                         {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -766,9 +766,9 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>Berangkat dari : { dataColumn2.berangkat }</p>
+                                                    <p className="text-white">Berangkat dari : <span className="text-black">{ dataColumn2.berangkat }</span></p>
                                                     <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn2.ke }</p>
-                                                    <p>Pada Tanggal &nbsp;&nbsp;: { dataColumn2.tanggal === '' ? '' : moment(dataColumn2.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-white">Pada Tanggal &nbsp;&nbsp;: <span className="text-black">{ dataColumn2.tanggal === '' ? '' : moment(dataColumn2.tanggal).format('DD MMMM YYYY') }</span></p>
                                                     <p className="text-center">Kepala Bidang Perikanan Tangkap Dinas Kelautan dan Perikanan Prov. Jabar</p>
                                                     <p className="mt-20 text-center">{ pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nama : '' }</p>
                                                     <p className="text-center">NIP. { pegawaiKepalaDinas !== null ? pegawaiKepalaDinas[0].nip : '' }</p>
@@ -787,7 +787,7 @@ export const View = ({
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2 align-text-top`}>
                                     {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -820,9 +820,9 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>III. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn3.tiba }</p>
-                                                    <p className="ml-4">Pada Tanggal : { dataColumn3.tanggalTiba === '' ? '' : moment(dataColumn3.tanggalTiba).format('DD MMMM YYYY') }</p>
-                                                    <p className="ml-4">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn3.kepala }</p>
+                                                    <p className="text-white">III. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn3.tiba }</span></p>
+                                                    <p className="ml-4 text-white">Pada Tanggal : <span className="text-black">{ dataColumn3.tanggalTiba === '' ? '' : moment(dataColumn3.tanggalTiba).format('DD MMMM YYYY') }</span></p>
+                                                    <p className="ml-4 text-white">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn3.kepala }</span></p>
                                                     <p className="mt-20 text-center"></p>
                                                     <p className="text-center"></p>                                                
                                                 </>
@@ -838,7 +838,7 @@ export const View = ({
                                             )
                                         }
                                     </td>
-                                    <td className="w-1/2 border border-black px-2 pb-2">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2`}>
                                         {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -872,9 +872,9 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>Berangkat dari : { dataColumn3.berangkat }</p>
-                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn3.ke }</p>
-                                                    <p>Pada Tanggal &nbsp;&nbsp;: { dataColumn3.tanggal === '' ? '' : moment(dataColumn3.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-white">Berangkat dari : <span className="text-black">{ dataColumn3.berangkat }</span></p>
+                                                    <p className="text-white">Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn3.ke }</span></p>
+                                                    <p className="text-white">Pada Tanggal &nbsp;&nbsp;: <span className="text-black">{ dataColumn3.tanggal === '' ? '' : moment(dataColumn3.tanggal).format('DD MMMM YYYY') }</span></p>
                                                     <p className="text-center"></p>
                                                     <p className="mt-20 text-center"></p>
                                                     <p className="text-center"></p>
@@ -893,7 +893,7 @@ export const View = ({
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2 align-text-top`}>
                                     {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -926,9 +926,9 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>IV. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn4.tiba }</p>
-                                                    <p className="ml-4">Pada Tanggal : { dataColumn4.tanggalTiba === '' ? '' : moment(dataColumn4.tanggalTiba).format('DD MMMM YYYY') }</p>
-                                                    <p className="ml-4">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn4.kepala }</p>
+                                                    <p className="text-white">IV. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn4.tiba }</span></p>
+                                                    <p className="ml-4 text-white">Pada Tanggal : <span className="text-black">{ dataColumn4.tanggalTiba === '' ? '' : moment(dataColumn4.tanggalTiba).format('DD MMMM YYYY') }</span></p>
+                                                    <p className="ml-4 text-white">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn4.kepala }</span></p>
                                                     <p className="mt-20 text-center"></p>
                                                     <p className="text-center"></p>                                                
                                                 </>
@@ -944,7 +944,7 @@ export const View = ({
                                             )
                                         }
                                     </td>
-                                    <td className="w-1/2 border border-black px-2 pb-2">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2`}>
                                         {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -978,9 +978,9 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>Berangkat dari : { dataColumn4.berangkat }</p>
-                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn4.ke }</p>
-                                                    <p>Pada Tanggal &nbsp;&nbsp;: { dataColumn4.tanggal === '' ? '' : moment(dataColumn4.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-white">Berangkat dari : <span className="text-black">{ dataColumn4.berangkat }</span></p>
+                                                    <p className="text-white">Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn4.ke }</span></p>
+                                                    <p className="text-white">Pada Tanggal &nbsp;&nbsp;: <span className="text-black">{ dataColumn4.tanggal === '' ? '' : moment(dataColumn4.tanggal).format('DD MMMM YYYY') }</span></p>
                                                     <p className="text-center"></p>
                                                     <p className="mt-20 text-center"></p>
                                                     <p className="text-center"></p>
@@ -999,7 +999,7 @@ export const View = ({
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2 align-text-top`}>
                                         {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -1013,7 +1013,7 @@ export const View = ({
                                                         <div className="ml-4">Pada Tanggal :</div>
                                                         <div className="col-span-2">
                                                             <DatePicker
-                                                                selected={ dataColumn4.tanggalTiba === '' ? new Date() : new Date(dataColumn5.tanggalTiba)}
+                                                                selected={ dataColumn5.tanggalTiba === '' ? new Date() : new Date(dataColumn5.tanggalTiba)}
                                                                 onChange={ (e) => onChangeDataColumn5(e,'tanggalTiba') }
                                                                 className="border-b border-blue-800 outline-none w-full"
                                                                 dateFormat="dd MMMM yyyy"
@@ -1032,9 +1032,9 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>V. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn5.tiba }</p>
-                                                    <p className="ml-4">Pada Tanggal : { dataColumn5.tanggalTiba === '' ? '' : moment(dataColumn5.tanggalTiba).format('DD MMMM YYYY') }</p>
-                                                    <p className="ml-4">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn5.kepala }</p>
+                                                    <p className="text-white">V. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn5.tiba }</span></p>
+                                                    <p className="ml-4 text-white">Pada Tanggal : <span className="text-black">{ dataColumn5.tanggalTiba === '' ? '' : moment(dataColumn5.tanggalTiba).format('DD MMMM YYYY') }</span></p>
+                                                    <p className="ml-4 text-white">Kepala &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn5.kepala }</span></p>
                                                     <p className="mt-20 text-center"></p>
                                                     <p className="text-center"></p>                                                
                                                 </>
@@ -1050,7 +1050,7 @@ export const View = ({
                                             )
                                         }
                                     </td>
-                                    <td className="w-1/2 border border-black px-2 pb-2">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2`}>
                                         {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -1084,9 +1084,9 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>Berangkat dari : { dataColumn5.berangkat }</p>
-                                                    <p>Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn5.ke }</p>
-                                                    <p>Pada Tanggal &nbsp;&nbsp;: { dataColumn5.tanggal === '' ? '' : moment(dataColumn5.tanggal).format('DD MMMM YYYY') }</p>
+                                                    <p className="text-white">Berangkat dari : <span className="text-black">{ dataColumn5.berangkat }</span></p>
+                                                    <p className="text-white">Ke &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn5.ke }</span></p>
+                                                    <p className="text-white">Pada Tanggal &nbsp;&nbsp;: <span className="text-black">{ dataColumn5.tanggal === '' ? '' : moment(dataColumn5.tanggal).format('DD MMMM YYYY') }</span></p>
                                                     <p className="text-center"></p>
                                                     <p className="mt-20 text-center"></p>
                                                     <p className="text-center"></p>
@@ -1105,7 +1105,7 @@ export const View = ({
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="w-1/2 border border-black px-2 pb-2 align-text-top">
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2 align-text-top`}>
                                         {
                                             pulang && !viewPage2 ? (
                                                 <>
@@ -1133,12 +1133,12 @@ export const View = ({
                                                 </>
                                             ) : viewPage2 ? (
                                                 <>
-                                                    <p>VI. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: { dataColumn6.tiba }</p>
-                                                    <p className="ml-4">Pada Tanggal : { dataColumn6.tanggalTiba === '' ? '' : moment(dataColumn6.tanggalTiba).format('DD MMMM YYYY') }</p>
-                                                    <p className="text-center">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
-                                                    <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
-                                                    <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
-                                                    <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                                    <p className="text-white">VI. Tiba di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-black">{ dataColumn6.tiba }</span></p>
+                                                    <p className="ml-4 text-white">Pada Tanggal : <span className="text-black">{ dataColumn6.tanggalTiba === '' ? '' : moment(dataColumn6.tanggalTiba).format('DD MMMM YYYY') }</span></p>
+                                                    <p className="text-center text-white">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
+                                                    <p className="mt-20 text-center text-white">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
+                                                    <p className="text-center text-white">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
+                                                    <p className="text-center text-white">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
                                                 </>
                                             ) : (
                                                 <>
@@ -1152,28 +1152,84 @@ export const View = ({
                                             )
                                         }
                                     </td>
-                                    <td className="w-1/2 border border-black px-2 pb-2">
-                                        <p className="text-justify">Telah diperiksa dengan keterangan bahwa perjalanan tersebut atas perintahnya dan semata-mata untuk kepentingan jabatan dalama waktu yang sesingkat-singkatanya.</p>
-                                        <p className="text-center">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
-                                        <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
-                                        <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
-                                        <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                    <td className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2`}>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <p className="text-justify">Telah diperiksa dengan keterangan bahwa perjalanan tersebut atas perintahnya dan semata-mata untuk kepentingan jabatan dalama waktu yang sesingkat-singkatanya.</p>
+                                                    <p className="text-center">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
+                                                    <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
+                                                    <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
+                                                    <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p className="text-justify text-white">Telah diperiksa dengan keterangan bahwa perjalanan tersebut atas perintahnya dan semata-mata untuk kepentingan jabatan dalama waktu yang sesingkat-singkatanya.</p>
+                                                    <p className="text-center text-white">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
+                                                    <p className="mt-20 text-center text-white">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
+                                                    <p className="text-center text-white">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
+                                                    <p className="text-center text-white">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p className="text-justify">Telah diperiksa dengan keterangan bahwa perjalanan tersebut atas perintahnya dan semata-mata untuk kepentingan jabatan dalama waktu yang sesingkat-singkatanya.</p>
+                                                    <p className="text-center">Kepala Dinas Pangan dan Pertanian Kota Cimahi</p>
+                                                    <p className="mt-20 text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].nama : '' }</p>
+                                                    <p className="text-center">{ pegawaiKepala !== null ? pegawaiKepala[0].jabatan : '' }</p>
+                                                    <p className="text-center">NIP. { pegawaiKepala !== null ? pegawaiKepala[0].nip : '' }</p>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan="2" className="w-1/2 border border-black px-2 pb-2 align-text-top">
-                                        <p>VII. Catatan Lain-Lain</p>
+                                    <td colSpan="2" className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black'} px-2 pb-2 align-text-top`}>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <p>VII. Catatan Lain-Lain</p>
+                                            ) : viewPage2 ? (
+                                                <p className="text-white">VII. Catatan Lain-Lain</p>
+                                            ) : (
+                                                <p>VII. Catatan Lain-Lain</p>
+                                            )
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan="2" className="w-1/2 border border-black px-2 pb-2 align-text-top">
-                                        <p>VII. Perhatian:</p>
-                                        <div className="ml-8 text-justify">
-                                            <ol className="list-decimal">
-                                                <li>Pada lembar I, penandatanganan oleh PenggunaAnggaran / Kuasa Pengguna Anggaran, dilaksanakan bersamaan dengan tanggal dikeluarkannya Surat Perintah (SP)</li>
-                                                <li>PA/KPA yang menerbitkan SPPD, pegawai yang melakukan perjalanan dinas, para pejabat yang mengesahkan tanggal berangkat / tiba, serta bendahara pengeluaran bertanggung jawab berdasarkan perarturan-perarturan Keuangan Negara apabila Negara menderita kerugian akibat kesalahan, kelalaian, dan kealpaannya.</li>
-                                            </ol>
-                                        </div>
+                                    <td colSpan="2" className={`w-1/2 ${ pulang && viewPage2 ? '' : 'border border-black' } px-2 pb-2 align-text-top`}>
+                                        {
+                                            pulang && !viewPage2 ? (
+                                                <>
+                                                    <p>VII. Perhatian:</p>
+                                                    <div className="ml-8 text-justify">
+                                                        <ol className="list-decimal">
+                                                            <li>Pada lembar I, penandatanganan oleh PenggunaAnggaran / Kuasa Pengguna Anggaran, dilaksanakan bersamaan dengan tanggal dikeluarkannya Surat Perintah (SP)</li>
+                                                            <li>PA/KPA yang menerbitkan SPPD, pegawai yang melakukan perjalanan dinas, para pejabat yang mengesahkan tanggal berangkat / tiba, serta bendahara pengeluaran bertanggung jawab berdasarkan perarturan-perarturan Keuangan Negara apabila Negara menderita kerugian akibat kesalahan, kelalaian, dan kealpaannya.</li>
+                                                        </ol>
+                                                    </div>
+                                                </>
+                                            ) : viewPage2 ? (
+                                                <>
+                                                    <p className="text-white">VII. Perhatian:</p>
+                                                    <div className="ml-8 text-justify text-white">
+                                                        <ol className="list-decimal">
+                                                            <li>Pada lembar I, penandatanganan oleh PenggunaAnggaran / Kuasa Pengguna Anggaran, dilaksanakan bersamaan dengan tanggal dikeluarkannya Surat Perintah (SP)</li>
+                                                            <li>PA/KPA yang menerbitkan SPPD, pegawai yang melakukan perjalanan dinas, para pejabat yang mengesahkan tanggal berangkat / tiba, serta bendahara pengeluaran bertanggung jawab berdasarkan perarturan-perarturan Keuangan Negara apabila Negara menderita kerugian akibat kesalahan, kelalaian, dan kealpaannya.</li>
+                                                        </ol>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>VII. Perhatian:</p>
+                                                    <div className="ml-8 text-justify">
+                                                        <ol className="list-decimal">
+                                                            <li>Pada lembar I, penandatanganan oleh PenggunaAnggaran / Kuasa Pengguna Anggaran, dilaksanakan bersamaan dengan tanggal dikeluarkannya Surat Perintah (SP)</li>
+                                                            <li>PA/KPA yang menerbitkan SPPD, pegawai yang melakukan perjalanan dinas, para pejabat yang mengesahkan tanggal berangkat / tiba, serta bendahara pengeluaran bertanggung jawab berdasarkan perarturan-perarturan Keuangan Negara apabila Negara menderita kerugian akibat kesalahan, kelalaian, dan kealpaannya.</li>
+                                                        </ol>
+                                                    </div>
+                                                </>
+                                            )
+                                        }
                                     </td>
                                 </tr>
                             </tbody>

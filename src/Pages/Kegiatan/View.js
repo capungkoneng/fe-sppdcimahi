@@ -196,7 +196,7 @@ export const View = ({
                     <div className="mt-8 flex justify-end">
                         <div className="flex gap-2 items-center">
                             {
-                                data.status === '3' ? (
+                                data.status === '1' ? (
                                     <button
                                         type="button"
                                         className="inline-flex justify-center rounded-full border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"

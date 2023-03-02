@@ -206,7 +206,7 @@ export const Pegawai = () => {
                                 <TableContent>{ result.pangkat }</TableContent>
                                 <TableContent>{ result.gol }</TableContent>
                                 <TableContent>{ result.phone }</TableContent>
-                                <TableContent className={`flex gap-2 text-sm text-[#202020] px-6 py-4 whitespace-nowrap ${index === value.length - 1 ? 'rounded-br-lg' : '' }`}>
+                                <TableContent className={`gap-2 text-sm text-[#202020] px-6 py-4 whitespace-nowrap ${index === value.length - 1 ? 'rounded-br-lg' : '' }`}>
                                     {
                                         ListContentTable.Action.map(resultItem => {
                                             return (
