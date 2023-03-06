@@ -1,37 +1,36 @@
 import { SectionForm, TextInput, TextArea, InputSelect } from "Components";
 import { Form, Formik } from "formik";
-import { SubUnitSchema } from "./data/SubUnitSchema";
+import { SubKegiatanSchema } from "./data/SubKegiatanSchema";
 import { useRef, useEffect, useState } from "react";
-import { AddDataSubUnit, EditDataSubUnit } from "Services/Pengaturan";
+import { AddDataSubKegiatan, EditDataSubKegiatan } from "Services/Pengaturan";
 import { toast } from "react-toastify";
 
 export const FormInput = ({
     onCallback = () => {},
     item = null,
     contentType="Add",
-    ListUnit = []
+    ListKegAnggaran = []
 }) => {
     const formikRef = useRef();
     const [data, setData] = useState({
-        kode_unit: "",
-        sub_kode_unit: "",
-        sub_nama_unit: "",
+        kode_sub_anggaran: "",
+        kode_kegiatan_anggaran: "",
+        nama_sub_anggaran: "",
     });
 
     useEffect(() => {
         if (item) {
             setData({
-                id: item.subunit_id,
-                kode_unit: item.kode_unit,
-                sub_kode_unit: item.sub_kode_unit,
-                sub_nama_unit: item.sub_nama_unit,
+                kode_sub_anggaran: item.kode_sub_anggaran,
+                kode_kegiatan_anggaran: item.kode_kegiatan_anggaran,
+                nama_sub_anggaran: item.nama_sub_anggaran,
             });
         }
     }, [item]);
 
     const addData = async (payload) => {
         try {
-            const response = await AddDataSubUnit(payload);
+            const response = await AddDataSubKegiatan(payload);
             if (response.data) {
                 onCallback({success: true});
                 toast.success("Berhasil tambah data");
@@ -44,7 +43,7 @@ export const FormInput = ({
 
     const editData = async (payload) => {
         try {
-            const response = await EditDataSubUnit(item?.subunit_id,payload);
+            const response = await EditDataSubKegiatan(item?.subkeg_id,payload);
             if (response.data) {
                 onCallback({success: true});
                 toast.success("Berhasil edit data");
@@ -60,7 +59,7 @@ export const FormInput = ({
             innerRef={formikRef}
             initialValues={data}
             enableReinitialize
-            validationSchema={SubUnitSchema}
+            validationSchema={SubKegiatanSchema}
             onSubmit={value => contentType === 'Edit' ? editData(value) : addData(value)}
         >
             {({errors, touched, values, handleChange, handleSubmit, setFieldValue}) => (
@@ -70,21 +69,21 @@ export const FormInput = ({
                         gap="4"
                     >
                         <InputSelect
-                            id="kode_unit"
-                            name="kode_unit"
+                            id="kode_kegiatan_anggaran"
+                            name="kode_kegiatan_anggaran"
                             withLabel
-                            label="Kode Unit"
-                            placeholder="Kode Unit"
-                            value={values.kode_unit}
+                            label="Kode Kegiatan Anggaran"
+                            placeholder="Kode Kegiatan Anggaran"
+                            value={values.kode_kegiatan_anggaran}
                             onChange={handleChange}
                         >
                             {
-                                ListUnit.map(value => {
-                                    return <option key={value.unit_id} value={value.kode_unit}>{value.kode_unit} - {value.nama_unit}</option>
+                                ListKegAnggaran.map(value => {
+                                    return <option key={value.keg_id} value={value.kode_kegiatan_anggaran}>{value.kode_kegiatan_anggaran} - {value.nama_kegiatan_anggaran}</option>
                             })
                             }
                         </InputSelect>
-                        {touched.kode_unit && errors.kode_unit && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.kode_unit}</span>}
+                        {touched.kode_kegiatan_anggaran && errors.kode_kegiatan_anggaran && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.kode_kegiatan_anggaran}</span>}
                     </SectionForm>
 
                     <SectionForm
@@ -93,15 +92,15 @@ export const FormInput = ({
                         className="mt-6"
                     >
                         <TextInput 
-                            id="sub_kode_unit"
-                            name="sub_kode_unit"
+                            id="kode_sub_anggaran"
+                            name="kode_sub_anggaran"
                             withLabel
-                            label="Kode Sub Unit"
-                            placeholder="Kode Sub Unit"
-                            value={values.sub_kode_unit}
+                            label="Kode Program"
+                            placeholder="Kode Program"
+                            value={values.kode_sub_anggaran}
                             onChange={handleChange}
                         />
-                        {touched.sub_kode_unit && errors.sub_kode_unit && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.sub_kode_unit}</span>}
+                        {touched.kode_sub_anggaran && errors.kode_sub_anggaran && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.kode_sub_anggaran}</span>}
                     </SectionForm>
 
                     <SectionForm
@@ -110,15 +109,15 @@ export const FormInput = ({
                         className="mt-6"
                     >
                         <TextArea 
-                            id="sub_nama_unit"
-                            name="sub_nama_unit"
+                            id="nama_sub_anggaran"
+                            name="nama_sub_anggaran"
                             withLabel
-                            label="Sub Unit"
-                            placeholder="Sub Unit"
-                            value={values.sub_nama_unit}
+                            label="Nama Sub Anggaran"
+                            placeholder="Nama Sub Anggaran"
+                            value={values.nama_sub_anggaran}
                             onChange={handleChange}
                         />
-                        {touched.sub_nama_unit && errors.sub_nama_unit && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.sub_nama_unit}</span>}
+                        {touched.nama_sub_anggaran && errors.nama_sub_anggaran && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.nama_sub_anggaran}</span>}
                     </SectionForm>
 
                         <div className="mt-8 flex justify-end">
@@ -130,7 +129,7 @@ export const FormInput = ({
                                         handleSubmit()
                                     }}
                                 >
-                                    {contentType === 'Add' ? 'Tambah Sub Unit' : 'Edit Sub Unit' }
+                                    {contentType === 'Add' ? 'Tambah Sub Anggaran' : 'Edit Sub Anggaran' }
                                 </button>
                             </div>
                         </div>

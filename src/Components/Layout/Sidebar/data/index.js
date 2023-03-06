@@ -216,6 +216,26 @@ export const ListNav = [
                 title: 'Sub Unit',
                 path: '/pemkot-cimahi/pengaturan/subunit'
             },
+            {
+                id: 'program',
+                title: 'Program',
+                path: '/pemkot-cimahi/pengaturan/program'
+            },
+            {
+                id: 'kegiatan_anggaran',
+                title: 'Kegiatan Anggaran',
+                path: '/pemkot-cimahi/pengaturan/kegiatan-anggaran'
+            },
+            {
+                id: 'sub_kegiatan',
+                title: 'Sub Kegiatan',
+                path: '/pemkot-cimahi/pengaturan/sub-kegiatan'
+            },
+            {
+                id: 'sumber_pendanaan',
+                title: 'Sumber Pendanaan',
+                path: '/pemkot-cimahi/pengaturan/sumber-pendanaan'
+            },
         ]
     },
     
