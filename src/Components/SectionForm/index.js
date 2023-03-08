@@ -5,8 +5,8 @@ export const SectionForm = ({
     gap = "2",
     className = ''
 }) => {
-    const classGridColumnMd = `md:grid-cols-${column}`;
-    const classGridColumnLg = `lg:grid-cols-${column}`;
+    let classGridColumnMd = 'md:grid-cols-'+column;
+    let classGridColumnLg = 'lg:grid-cols-'+column;
     return (
         <section className={`grid ${classGridColumnMd} ${classGridColumnLg} gap-${gap} ${className}`}>
             {children}

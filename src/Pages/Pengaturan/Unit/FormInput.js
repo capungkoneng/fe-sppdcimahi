@@ -9,7 +9,7 @@ export const FormInput = ({
     onCallback = () => {},
     item = null,
     contentType="Add",
-    ListKodeUrusan = []
+    listDataUrusan = []
 }) => {
     const formikRef = useRef();
     const [data, setData] = useState({
@@ -79,46 +79,12 @@ export const FormInput = ({
                             onChange={handleChange}
                         >
                             {
-                                ListKodeUrusan.map(value => {
+                                listDataUrusan.map(value => {
                                     return <option key={value.urusan_id} value={value.kode_urusan}>{value.kode_urusan} - {value.nama_urusan}</option>
                             })
                             }
                         </InputSelect>
                         {touched.kode_urusan && errors.kode_urusan && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.kode_urusan}</span>}
-                    </SectionForm>
-
-                    <SectionForm
-                        column="1"
-                        gap="4"
-                        className="mt-6"
-                    >
-                        <TextInput 
-                            id="kode_unit"
-                            name="kode_unit"
-                            withLabel
-                            label="Kode Unit"
-                            placeholder="Kode Unit"
-                            value={values.kode_unit}
-                            onChange={handleChange}
-                        />
-                        {touched.kode_unit && errors.kode_unit && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.kode_unit}</span>}
-                    </SectionForm>
-
-                    <SectionForm
-                        column="1"
-                        gap="4"
-                        className="mt-6"
-                    >
-                        <TextArea 
-                            id="nama_unit"
-                            name="nama_unit"
-                            withLabel
-                            label="Unit"
-                            placeholder="Unit"
-                            value={values.nama_unit}
-                            onChange={handleChange}
-                        />
-                        {touched.nama_unit && errors.nama_unit && <span className="mt-2 text-xs text-red-500 font-semibold">{errors.nama_unit}</span>}
                     </SectionForm>
 
                         <div className="mt-8 flex justify-end">

@@ -50,8 +50,6 @@ export const View = ({
         return dataPegawai
     }
 
-    console.log(pegawai)
-
     const onSelect = (selectedPegawai,payload) => {
         const datasPegawai = []
 

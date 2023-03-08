@@ -5,3 +5,4 @@ export const GetAllUnit = () => Axios.get(`/unit`);
 export const AddDataUnit = (payload) => Axios.post('/unit', payload);
 export const EditDataUnit = (id, payload) => Axios.put(`/unit/${id}`, payload);
 export const DeleteDataUnit = id => Axios.delete(`/unit/${id}`);
+export const GetDataUnitByUrusan = kode_urusan => Axios.get(`/unitby?kode_urusan=${kode_urusan}`);
