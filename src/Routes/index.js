@@ -1,5 +1,5 @@
 import { Layout } from "Components";
-import { Auth, Dashboard, Harian, Kegiatan, Pegawai, Penginapan, RapatLuarKantor, Representasi, SewaKendaraan, Spt, Spd, Pjsppd, Kwitansi, Np2d, Sp2d, Jabatan, Pangkat, Bidang, Golongan, Berkendara, Urusan, Unit, SubUnit, Program, KegiatanAnggaran, SubKegiatan, SumberPendanaan } from "Pages";
+import { Auth, Dashboard, Harian, Kegiatan, Pegawai, Penginapan, RapatLuarKantor, Representasi, SewaKendaraan, Spt, Spd, Pjsppd, Kwitansi, Np2d, Sp2d, Jabatan, Pangkat, Bidang, Golongan, Berkendara, Urusan, Unit, SubUnit, Program, KegiatanAnggaran, SubKegiatan, SumberPendanaan, AnggaranSPPD, JumlahPendanaan, Rekening } from "Pages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProtectRoute } from "./ProtectRoute";
 
@@ -35,6 +35,9 @@ export const RootRoute = () => {
                     <Route path="/pemkot-cimahi/pengaturan/Kegiatan-anggaran" element={<ProtectRoute><KegiatanAnggaran /></ProtectRoute>} />
                     <Route path="/pemkot-cimahi/pengaturan/Sub-kegiatan" element={<ProtectRoute><SubKegiatan /></ProtectRoute>} />
                     <Route path="/pemkot-cimahi/pengaturan/Sumber-pendanaan" element={<ProtectRoute><SumberPendanaan /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/Jumlah-pendanaan" element={<ProtectRoute><JumlahPendanaan /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/anggaran" element={<ProtectRoute><AnggaranSPPD /></ProtectRoute>} />
+                    <Route path="/pemkot-cimahi/pengaturan/rekening" element={<ProtectRoute><Rekening /></ProtectRoute>} />
                 </Route>
                 <Route path="/login" element={<Auth />} />
             </Routes>

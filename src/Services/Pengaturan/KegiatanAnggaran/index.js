@@ -5,3 +5,4 @@ export const GetAllKegAnggaran = () => Axios.get(`/kegang`);
 export const AddDataKegAnggaran = (payload) => Axios.post('/kegang', payload);
 export const EditDataKegAnggaran = (id, payload) => Axios.put(`/kegang/${id}`, payload);
 export const DeleteDataKegAnggaran = id => Axios.delete(`/kegang/${id}`);
+export const GetDataKegiatanByProgram = kode_program => Axios.get(`/kegangby?kode_program=${kode_program}`);

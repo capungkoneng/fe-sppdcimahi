@@ -5,3 +5,4 @@ export const GetAllSubKegiatan = () => Axios.get(`/subkegang`);
 export const AddDataSubKegiatan = (payload) => Axios.post('/subkegang', payload);
 export const EditDataSubKegiatan = (id, payload) => Axios.put(`/subkegang/${id}`, payload);
 export const DeleteDataSubKegiatan = id => Axios.delete(`/subkegang/${id}`);
+export const GetDataSubKegiatanByKegiatan = kode => Axios.get(`/subkegangby?kode_kegiatan_anggaran=${kode}`);

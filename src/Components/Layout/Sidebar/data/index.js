@@ -236,6 +236,16 @@ export const ListNav = [
                 title: 'Sumber Pendanaan',
                 path: '/pemkot-cimahi/pengaturan/sumber-pendanaan'
             },
+            {
+                id: 'jumlah_pendanaan',
+                title: 'Jumlah Pendanaan',
+                path: '/pemkot-cimahi/pengaturan/jumlah-pendanaan'
+            },
+            {
+                id: 'rekening',
+                title: 'Rekening',
+                path: '/pemkot-cimahi/pengaturan/rekening'
+            },
         ]
     },
     
