@@ -6,6 +6,97 @@ export const View = ({
     onCallback = () => { },
 }) => {
 
+    const tabelBiayaAnggaran = (value) => {
+        const grandTotal = value.sumberPens[0].jumPens.filter(res => { return res.tahun === value.tahun_anggaran })
+        console.log(grandTotal)
+        return (
+            <>
+                <table className="w-full mt-4 text-xs text-box">
+                    {
+                        value.sumberPens[0].rekAnggarans.map((result, index) => {
+                            return (
+                                <>
+                                    <tr key={index}>
+                                        <td className="border border-black w-[11%] p-1">{result.kode}</td>
+                                        <td className="border border-black w-[28%] p-1" colSpan={5}>{result.keperluan}</td>
+                                        <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(result.total))}</td>
+                                        <td className="border border-black w-[28%] p-1" colSpan={4}> </td>
+                                        <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(result.total))}</td>
+                                        <td className="border border-black w-[2%] p-1 text-center">0</td>
+                                    </tr>
+                                    {
+                                        result.detailRekAnggarans.length > 0 ? (
+                                            result.detailRekAnggarans.map((data, i) => {
+                                                return (
+                                                    <>
+                                                        {
+                                                            i === 0 ? (
+                                                                <>
+                                                                    <tr key={i}>
+                                                                        <td className="border border-black w-[11%] p-1"></td>
+                                                                        <td className="border border-black w-[28%] p-1" colSpan={5}>[#] {data.judul}</td>
+                                                                        <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(data.grandtotal))}</td>
+                                                                        <td className="border border-black w-[28%] p-1" colSpan={4}> </td>
+                                                                        <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(data.grandtotal))}</td>
+                                                                        <td className="border border-black w-[2%] p-1 text-center">0</td>
+                                                                    </tr>
+                                                                    <tr key={i}>
+                                                                        <td className="border border-black w-[11%] p-1"></td>
+                                                                        <td className="border border-black w-[28%] p-1" colSpan={5}>[-]</td>
+                                                                        <td className="border border-black w-[15%] p-1"></td>
+                                                                        <td className="border border-black w-[28%] p-1" colSpan={4}> </td>
+                                                                        <td className="border border-black w-[15%] p-1"></td>
+                                                                        <td className="border border-black w-[2%] p-1 text-center"></td>
+                                                                    </tr>
+                                                                </>
+                                                            ) : null
+                                                        }
+                                                        <tr key={i}>
+                                                            <td className="border border-black w-[11%] p-1"></td>
+                                                            <td className="border border-black w-[14%] p-1">{data.keperluan}
+                                                            </td>
+                                                            <td className="border border-black w-[3%] p-1">{data.jumlah_peserta} {data.jenis} / hari</td>
+                                                            <td className="border border-black w-[4%] p-1">{data.jenis} / hari</td>
+                                                            <td className="border border-black w-[6%] p-1">{formatterCurrency.format(parseInt(data.jumlah))}</td>
+                                                            <td className="border border-black w-[1%] p-1">0</td>
+                                                            <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(data.grandtotal))}</td>
+                                                            <td className="border border-black w-[7%] p-1">{data.jumlah_peserta} {data.jenis} / hari</td>
+                                                            <td className="border border-black w-[10%] p-1">{data.jenis} / hari</td>
+                                                            <td className="border border-black w-[10%] p-1">{formatterCurrency.format(parseInt(data.jumlah))}</td>
+                                                            <td className="border border-black w-[1%] p-1">0</td>
+                                                            <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(data.grandtotal))}</td>
+                                                            <td className="border border-black w-[2%] p-1 text-center">0</td>
+                                                        </tr>
+                                                    </>
+                                                )
+                                            })
+                                        ) : null
+                                    }
+                                </>
+                            )
+                        })
+                    }
+                    <tr>
+                        <td className="border border-black w-[39%] p-1 text-right" colSpan={6}>Grand Total:</td>
+                        <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(grandTotal[0].jumlah))}</td>
+                        <td className="border border-black w-[28%] p-1 text-right" colSpan={4}>Grand Total:</td>
+                        <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(grandTotal[0].jumlah))}</td>
+                        <td className="border border-black w-[2%] p-1">0</td>
+                    </tr>
+                </table>
+                <div className="flex mt-1 text-sm">
+                    <div className="border border-black px-6 py-6 w-[60%] mr-1"></div>
+                    <div className="border border-black w-[40%] text-center">
+                        <p>Kota Cimahi, ..................</p>
+                        <p className="pb-28">Kepala Dinas Pangan dan Pertanian</p>
+                        <p>TITA MARIAM, S,p.t., M.M.</p>
+                        <p>NIP. 199982198291829</p>
+                    </div>
+                </div>
+            </>
+        )
+    }
+
     return (
         <div className="text-black">
             {data !== null ? (
@@ -63,77 +154,7 @@ export const View = ({
                             )
                         })
                     }
-                    <table className="w-full mt-4 text-xs">
-                        {
-                            data.sumberPens[0].rekAnggarans.map((result, index) => {
-                                return (
-                                    <>
-                                        <tr key={index}>
-                                            <td className="border border-black w-[11%] p-1">{result.kode}</td>
-                                            <td className="border border-black w-[28%] p-1">{result.keperluan}</td>
-                                            <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(result.total))}</td>
-                                            <td className="border border-black w-[28%] p-1"> </td>
-                                            <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(result.total))}</td>
-                                            <td className="border border-black w-[2%] p-1 text-center">0</td>
-                                        </tr>
-                                        {
-                                            result.detailRekAnggarans.length > 0 ? (
-                                                result.detailRekAnggarans.map((data, i) => {
-                                                    return (
-                                                        <>
-                                                            {
-                                                                i === 0 ? (
-                                                                    <>
-                                                                        <tr key={i}>
-                                                                            <td className="border border-black w-[13%] p-1"></td>
-                                                                            <td className="border border-black w-[27%] p-1">[#] {data.judul}</td>
-                                                                            <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(data.grandtotal))}</td>
-                                                                            <td className="border border-black w-[27%] p-1"> </td>
-                                                                            <td className="border border-black w-[15%] p-1">{formatterCurrency.format(parseInt(data.grandtotal))}</td>
-                                                                            <td className="border border-black w-[2%] p-1 text-center">0</td>
-                                                                        </tr>
-                                                                        <tr key={i}>
-                                                                            <td className="border border-black w-[13%] p-1"></td>
-                                                                            <td className="border border-black w-[27%] p-1" >[-]</td>
-                                                                            <td className="border border-black w-[15%] p-1"></td>
-                                                                            <td className="border border-black w-[27%] p-1"> </td>
-                                                                            <td className="border border-black w-[15%] p-1"></td>
-                                                                            <td className="border border-black w-[2%] p-1 text-center"></td>
-                                                                        </tr>
-                                                                    </>
-                                                                ) : null
-                                                            }
-                                                            <tr>
-                                                                <td className="border border-black w-[13%] p-1">
-                                                                </td>
-                                                                <td className="border border-black p-0" colSpan={5}>
-                                                                    <table className="w-full">
-                                                                        <tr>
-                                                                            <td className="w-[1%]">{data.keperluan}</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">{data.jumlah_peserta} {data.jenis}/hari</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">{data.jenis}/hari</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">{formatterCurrency.format(parseInt(data.jumlah))}</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">0</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">{ formatterCurrency.format(parseInt(parseInt(data.jumlah) * parseInt(data.jumlah_peserta))) }</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">{data.jumlah_peserta} {data.jenis}/hari</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">{data.jenis}/hari</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">0</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">{formatterCurrency.format(parseInt(data.jumlah))}</td>
-                                                                            <td className="border-l border-black w-[1%] text-center">0</td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </>
-                                                    )
-                                                })
-                                            ) : null
-                                        }
-                                    </>
-                                )
-                            })
-                        }
-                    </table>
+                    {tabelBiayaAnggaran(data)}
                 </>
             ) : (null)
             }
